@@ -101,6 +101,12 @@
                 <span>Queries</span></a>
             </li>
 
+            <li class="nav-item ">
+                <a class="nav-link" href="users.php">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Users</span></a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 

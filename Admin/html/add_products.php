@@ -150,7 +150,7 @@
                     <span>Categories</span></a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="products.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Products</span></a>
@@ -160,6 +160,12 @@
                 <a class="nav-link" href="contact_us.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Queries</span></a>
+            </li>
+
+            <li class="nav-item ">
+                <a class="nav-link" href="users.php">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Users</span></a>
             </li>
 
             <!-- Divider -->
