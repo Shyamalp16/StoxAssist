@@ -10884,6 +10884,15 @@ img{
   object-fit:contain;
 }
 
+div .center{
+  margin: auto;
+  margin-top: 15px;
+  width: 50%;
+  /* padding: 10px; */
+  text-align: center;
+}
+
+
 .btn-google {
   color: #fff;
   background-color: #ea4335;

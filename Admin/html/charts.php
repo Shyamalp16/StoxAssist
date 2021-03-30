@@ -1,41 +1,3 @@
-<?php 
-    require('connection.inc.php');
-    require('functions.inc.php');
-    
-    $sql = "select * from categories order by id asc";
-    $res = mysqli_query($con,$sql);
-
-    if(isset($_GET['type']) && $_GET['type']!=''){
-        $type=get_safe_value($con,$_GET['type']);
-        if($type=='status'){
-            $operation=get_safe_value($con,$_GET['operation']);
-            $id=get_safe_value($con,$_GET['id']);
-            if($operation=='active'){
-                $status='1';
-                Header('Location: '.$_SERVER['PHP_SELF']);
-
-            }else{
-                $status='0';
-                Header('Location: '.$_SERVER['PHP_SELF']);
-
-            }
-            $update_status_sql="update product set status='$status' where id='$id'";
-            mysqli_query($con,$update_status_sql);
-        }
-
-        if($type=='delete'){
-            $id=get_safe_value($con,$_GET['id']);
-            $delete_status_sql="delete from product where id='$id'";
-            Header('Location: '.$_SERVER['PHP_SELF']);
-            mysqli_query($con,$delete_status_sql);
-        }
-    }
-
-    $sql="select product.*,categories.categories from product,categories where product.categories_id=categories.id order by product.id desc";
-
-    $res = mysqli_query($con,$sql);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Products</title>
+    <title>Charts</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -58,7 +20,6 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/sb-admin-2.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
 
 </head>
 
@@ -71,7 +32,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -94,7 +55,7 @@
                     <span>Categories</span></a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="products.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Products</span></a>
@@ -102,8 +63,8 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="contact_us.php">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Queries</span></a>
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Queries</span></a>
             </li>
 
             <!-- Divider -->
@@ -159,13 +120,12 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
-                    aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Pages</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
-                    data-parent="#accordionSidebar">
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="login.html">Login</a>
@@ -174,14 +134,14 @@
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item active" href="blank.html">Blank Page</a>
+                        <a class="collapse-item" href="blank.html">Blank Page</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.php">
+            <li class="nav-item active">
+                <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span></a>
             </li>
@@ -416,60 +376,72 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <select class="form-control form-control-user center" id="barDisp">
+                        <option value=""> Select Here </option>
+                        <option value="bar"> Bar Chart </option>
+                        <option value="area"> Area Chart </option>
+                        <option value="donut"> Donut Chart </option>
+                    </select>
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Products</h1>
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Products</h6>
-                            <h6 class="m-0 font-weight-bold text-primary text-right"><a href="add_products.php">Add Products</a></h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered nowrap" id="table_id" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Category</th>
-                                            <th>Name</th>
-                                            <th>Image</th>
-                                            <th>Price</th>
-                                            <th>MRP</th>
-                                            <th>QTY</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php while($row = mysqli_fetch_assoc($res)){ ?>
-                                        <tr>
-                                            <td><?php echo $row['id'] ?></td>
-                                            <td><?php echo $row['categories'] ?></td>
-                                            <td><?php echo $row['name'] ?></td>
-                                            <td><img class="pimage" src="<?php echo PRODUCT_IMAGE_SITE_PATH.$row['image']?> "/></td>
-                                            <td><?php echo $row['price'] ?></td>
-                                            <td><?php echo $row['mrp'] ?></td>
-                                            <td><?php echo $row['qty'] ?></td>
-                                            <td>
-                                                <?php
-                                                    if($row['status']==1){
-                                                        echo "<a href='?type=status&operation=deactive&id=".$row['id']."'><button class='btn btn-success btn-icon-split text'><span class='text'><i class='fas fa-check'></i> Active </span></button></a> &nbsp;";
-                                                    }else{
-                                                        echo "<a href='?type=status&operation=active&id=".$row['id']."'><button class='btn btn-danger btn-icon-split'><span class='text'><i class='fas fa-check'></i> Deactive </span></button></a> &nbsp;";
-                                                    }
-                                                     echo " <a href='edit_product.php?id=".$row['id']."'><button class='btn btn-circle btn-info'>Edit</button></a>";
-                                                ?>
-                                            </td>
-                                            <td>
-                                                <?php
-                                                    echo "<a href='?type=delete&id=".$row['id']."'><button class='btn btn-circle btn-danger'><i class='fas fa-trash'></i></button></a> &nbsp;";
-                                                ?>
-                                            </td>
-                                        </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- <div class="col-xl-8 col-lg-7"> -->
+                            <div class="card shadow mb-4 center chart" id="def" style="display:inline">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Statistics</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        Use the above tool to look at the statistics in a visual manner for the wanted aspect of the business.
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+
+                            <!-- Area Chart -->
+                            <div class="card shadow mb-4 center chart" id="area" style="display:none">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="myAreaChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bar Chart -->
+                            <div class="card shadow mb-4 center chart" id="bar" style="display:none">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Bar Chart: Available Stock</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-bar">
+                                        <canvas id="myBarChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <!-- </div> -->
+
+                        <!-- Donut Chart -->
+                        <!-- <div class="col-xl-4 col-lg-5"> -->
+                            <div class="card shadow mb-4 center chart" id="donut" style="display:none">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4">
+                                        <canvas id="myPieChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- </div> -->
                     </div>
+
+                </div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -496,7 +468,6 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    </div>
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -511,7 +482,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="logout.php">Logout</a>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
                 </div>
             </div>
         </div>
@@ -526,17 +497,16 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-    
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <script src="js/demo/datatables-demo.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#table_id').DataTable({searching: false, paging: false, info: false, ordering:true, autoWidth: false, scrollX:false});
-        } );
-    </script>
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/demo/chart-bar-demo.js"></script>
+    <script src="js/chartsel.js"></script>
+
 </body>
 
 </html>
