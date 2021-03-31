@@ -1,83 +1,70 @@
-<?php
-    require('connection.inc.php');
-    require('functions.inc.php');
-    $msg='';
-    if(isset($_POST['submit'])){
-	    $username=get_safe_value($con,$_POST['username']);
-       // $username=$_POST['username'];
-       // $password=$_POST['password'];
-         $password=get_safe_value($con,$_POST['password']);
-	    $sql="select * from admin_users where username='$username' and password='$password'";
-	    $res=mysqli_query($con,$sql);
-	    $count=mysqli_num_rows($res);
-	    if($count==1){
-		    $_SESSION['ADMIN_USERNAME'] = $username;
-		    header('location:index.php');
-		    die();
-	    }else{
-    		$msg="Please enter correct login details";	
-	    }
-    }
-?>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>Login</title>
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-</head>
+  </head>
+  <body>
 
-<body class="bg-gradient-primary">
+  <div class="content">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xl-10 col-lg-12 col-md-9">
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                            <div class="col-lg-6">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
-                                    </div>
-                                    <form class="user" method="post">
-                                        <div class="form-group">
-                                            <input type="email" name="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" name="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Enter Password" required>
-                                        </div>
-                                        <button type="submit" name="submit" class="btn btn-primary btn-user btn-block">Sign in </button>
-                                        <hr>
-                                    </form>
-                                    <div class="border-left-danger">
-                                        <?php echo $msg?>
-                                    </div>
-                                    <hr>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <div class="row justify-content-center">
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-12">
+              <div class="form-block">
+                  <div class="mb-4">
+                  <h3>Sign In to <strong>StoxAssist</strong></h3>
                 </div>
+                <form action="#" method="post">
+                  <div class="form-group first">
+                    <label for="username">Email ID</label>
+                    <input type="email" class="form-control" id="email">
+                  </div>
+                  <div class="form-group last mb-4">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password">
+                  </div>
+                  <div class="d-flex mb-5 align-items-center">
+                    <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
+                      <input type="checkbox" checked="checked"/>
+                      <div class="control__indicator"></div>
+                    </label>
+                    <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span> 
+                  </div>
+                  <input type="submit" value="Log In" class="btn btn-pill text-white btn-block btn-primary">
+                  <span class="d-block text-center my-4 text-muted"> or sign in with</span>
+                  <div class="social-login text-center">
+                    <a href="#" class="facebook">
+                      <span class="icon-facebook mr-3"></span> 
+                    </a>
+                    <a href="#" class="twitter">
+                      <span class="icon-twitter mr-3"></span> 
+                    </a>
+                    <a href="#" class="google">
+                      <span class="icon-google mr-3"></span> 
+                    </a>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
+          
         </div>
+        
+      </div>
     </div>
+  </div>
 
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="js/sb-admin-2.min.js"></script>
-</body>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>

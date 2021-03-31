@@ -1,7 +1,15 @@
 <?php
 	require('top.php');
 	$product_id=mysqli_real_escape_string($con,$_GET['id']);
-	$get_product=get_product($con,'','',$product_id);
+	if($product_id>0){
+		$get_product=get_product($con,'','',$product_id);
+	}else{
+		?>
+		<script>
+			window.location.href='index.php';
+		</script>
+	<?php
+	}
 ?>
 <!-- Cart -->
 	<div class="wrap-header-cart js-panel-cart">
@@ -40,6 +48,7 @@
 
 
 	<!-- breadcrumb -->
+	<?php if(count($get_product)>0){ ?>
 	<div class="container marg">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
 			<a href="index.php" class="stext-109 cl8 hov-cl1 trans-04">
@@ -57,10 +66,12 @@
 			</span>
 		</div>
 	</div>
+	<?php } ?>
 		
 
 	<!-- Product Detail -->
 	<section class="sec-product-detail bg0 p-t-65 p-b-60 marg" >
+		<?php if(count($get_product)>0) { ?>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-lg-7 p-b-30">
@@ -366,6 +377,14 @@
 		</div>
 	</section>
 
+	<?php } else { ?>
+			<br>
+			<br>
+			<br>
+			<br>
+			<p class="cl5 ltext-101 txt-center"> <?php echo "No Products Found"; ?> </p>
+	<?php } ?>
+
 
 	<!-- Related Products -->
 	<section class="sec-relate-product bg0 p-t-45 p-b-105">
@@ -410,6 +429,9 @@
 			</div>
 		</div>
 	</section>
+
+
+
 <?php
 require('footer.php');
 ?>

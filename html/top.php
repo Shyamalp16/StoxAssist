@@ -77,10 +77,6 @@
 								</ul>
 							</li>
 
-							<li>
-								<a href="product.html">Shop</a>
-							</li>
-
 							<li class="label1" data-label1="hot">
 								<a href="shoping-cart.html">Features</a>
 							</li>
