@@ -1,5 +1,6 @@
 <?php
     require('connection.inc.php');
+	require('functions.inc.php');
     $cat = mysqli_query($con,"select * from categories where status=1 order by categories asc");
     $cat_arr = array();
     while($row=mysqli_fetch_assoc($cat)){
@@ -9,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Home</title>
+	<title>StoxAssist</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
@@ -43,6 +44,9 @@
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
 							My Account
 						</a>
+						<a href="login.php" class="flex-c-m trans-04 p-lr-25">
+							Login
+						</a>
 					</div>
 				</div>
 			</div>
@@ -60,20 +64,14 @@
 						<ul class="main-menu">
 							<li class="active-menu">
 								<a href="index.php">Home</a>
-								<!-- <ul class="sub-menu">
-									<li><a href="index.html">Homepage 1</a></li>
-									<li><a href="home-02.html">Homepage 2</a></li>
-									<li><a href="home-03.html">Homepage 3</a></li>
-								</ul> -->
 							</li>
-
                             <li>
 								<a href="#">Categories</a>
 								<ul class="sub-menu">
                                     <?php
                                     foreach($cat_arr as $list){
                                     ?>
-                                        <li><a href="categpries.php?id=<?php echo $list['id']?>"><?php echo $list['categories']?></a></li>
+                                        <li><a href="categories.php?id=<?php echo $list['id']?>"><?php echo $list['categories']?></a></li>
                                     <?php }
                                     ?>
 								</ul>
@@ -88,7 +86,7 @@
 							</li>
 
 							<li>
-								<a href="contact.html">Contact</a>
+								<a href="contact.php">Contact</a>
 							</li>
 						</ul>
 					</div>	
@@ -150,7 +148,7 @@
 				<li>
 					<a href="index.php">Home</a>
 					<ul class="sub-menu-m">
-						<li><a href="index.html">Homepage 1</a></li>
+						<li><a href="index.php">Homepage 1</a></li>
 					</ul>
 					<span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>

@@ -279,4 +279,32 @@
 
 
 
+
+
 })(jQuery);
+
+function send_message(){
+    var name=jQuery("#name").val();
+    var email=jQuery("#email").val();
+    var mobile=jQuery("#mobile").val();
+    var message=jQuery("#msg").val();
+
+    if(name==""){
+        alert("Enter Name Please");
+    }else if(email==""){
+        alert("Enter Email Please");
+    }else if(mobile==""){
+        alert("Enter Mobile Number Please");
+    }else if(message==""){
+        alert("Enter Your Query Please");
+    }else{
+        jQuery.ajax({
+            url:'send_message.php',
+            type:'post',
+            data:'name='+name+'&email='+email+'&mobile='+mobile+'&message='+message,
+            success:function(result){
+                alert(result);
+            }
+        })
+    }
+}

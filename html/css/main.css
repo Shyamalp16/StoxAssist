@@ -3060,6 +3060,17 @@ input.num-product::-webkit-inner-spin-button {
   overflow: hidden;
 }
 
+.marg {
+  margin-top:auto;
+  padding-top:50px;
+}
+
+.prodimg {
+  width:200px;
+  height:200px;
+  object-fit:contain;
+}
+
 .hov-img0 img{
   width: 100%;
   -webkit-transition: transform 0.9s ease;
