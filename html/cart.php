@@ -1,6 +1,5 @@
 <?php
     require('top.php');
-    
 ?>
     <br>
     <br>
