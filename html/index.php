@@ -1,13 +1,5 @@
 <?php
     require('top.php');
-
-	foreach($_SESSION['cart'] as $key=>$val){
-		$productArr = get_product($con,'','',$key);
-		$pname=$productArr[0]['name'];
-		$pprice=$productArr[0]['price'];
-		$pimage=$productArr[0]['image'];
-		$qty=$val['qty'];
-	}
 ?>
 	<!-- Cart -->
 	<div class="wrap-header-cart js-panel-cart">
