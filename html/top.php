@@ -1,11 +1,15 @@
 <?php
     require('connection.inc.php');
 	require('functions.inc.php');
+	require('add_tocart.inc.php');
     $cat = mysqli_query($con,"select * from categories where status=1 order by categories asc");
     $cat_arr = array();
     while($row=mysqli_fetch_assoc($cat)){
         $cat_arr[] = $row;
     }
+
+	$ob = new add_tocart();
+	$total=$ob->total();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,9 +48,12 @@
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
 							My Account
 						</a>
-						<a href="login.php" class="flex-c-m trans-04 p-lr-25">
-							Login
-						</a>
+						<?php if(isset($_SESSION['USER_LOGIN'])){
+							echo '<a href="logout_submit.php" class="flex-c-m trans-04 p-lr-25">Logout</a>';
+						}else{ 
+							echo '<a href="login.php" class="flex-c-m trans-04 p-lr-25">Login</a>';
+						}
+						?>
 					</div>
 				</div>
 			</div>
@@ -78,7 +85,7 @@
 							</li>
 
 							<li class="label1" data-label1="hot">
-								<a href="shoping-cart.html">Features</a>
+								<a href="cart.php">Features</a>
 							</li>
 
 							<li>
@@ -93,7 +100,7 @@
 							<i class="zmdi zmdi-search"></i>
 						</div>
 
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="1">
+						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="<?php echo $total?>">
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
 					</div>
@@ -114,7 +121,7 @@
 					<i class="zmdi zmdi-search"></i>
 				</div>
 
-				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2">
+				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="<?php echo $total?>">
 					<i class="zmdi zmdi-shopping-cart"></i>
 				</div>
 			</div>
@@ -171,7 +178,7 @@
 				</li>
 
 				<li>
-					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
+					<a href="cart.php" class="label1 rs1" data-label1="hot">Features</a>
 				</li>   
 
 				<li>

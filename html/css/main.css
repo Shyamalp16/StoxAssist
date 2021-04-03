@@ -2965,7 +2965,7 @@ input.num-product::-webkit-inner-spin-button {
   width: 100%;
 }
 
-.how-itemcart1::after {
+/* .how-itemcart1::after {
   content: '\e870';
   font-family: Linearicons-Free;
   font-size: 16px;
@@ -2988,7 +2988,7 @@ input.num-product::-webkit-inner-spin-button {
   -o-transition: all 0.3s;
   -moz-transition: all 0.3s;
   opacity: 0;
-}
+} */
 
 .how-itemcart1:hover:after {
   opacity: 1;
@@ -3064,6 +3064,7 @@ input.num-product::-webkit-inner-spin-button {
   margin-top:auto;
   padding-top:50px;
 }
+
 
 .prodimg {
   width:200px;

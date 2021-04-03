@@ -33,11 +33,11 @@
 					</div>
 
 					<div class="header-cart-buttons flex-w w-full">
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+						<a href="cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
 							View Cart
 						</a>
 
-						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+						<a href="cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
 							Check Out
 						</a>
 					</div>
@@ -132,7 +132,7 @@
 						
 						<!--  -->
 						<div class="p-t-33">
-							<div class="flex-w flex-r-m p-b-10">
+							<!-- <div class="flex-w flex-r-m p-b-10">
 								<div class="size-203 flex-c-m respon6">
 									Size
 								</div>
@@ -149,9 +149,9 @@
 										<div class="dropDownSelect2"></div>
 									</div>
 								</div>
-							</div>
+							</div> -->
 
-							<div class="flex-w flex-r-m p-b-10">
+							<!-- <div class="flex-w flex-r-m p-b-10">
 								<div class="size-203 flex-c-m respon6">
 									Color
 								</div>
@@ -167,24 +167,26 @@
 										</select>
 										<div class="dropDownSelect2"></div>
 									</div>
-								</div>
-							</div>
+								</div> 
+							</div> -->
 
 							<div class="flex-w flex-r-m p-b-10">
 								<div class="size-204 flex-w flex-m respon6-next">
-									<div class="wrap-num-product flex-w m-r-20 m-tb-10">
+									<span>Quantity:</span>&nbsp;&nbsp;<div class="wrap-num-product flex-w m-r-20 m-tb-10">
 										<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
 											<i class="fs-16 zmdi zmdi-minus"></i>
 										</div>
 
-										<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
+										<input id="qty" class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" max="10" value="1">
 
 										<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 											<i class="fs-16 zmdi zmdi-plus"></i>
 										</div>
 									</div>
+									<br/>
+									<br/>
 
-									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" href="javascript:void(0)" onclick="manageCart('<?php echo $get_product['0']['id'] ?>','add')">
 										Add to cart
 									</button>
 								</div>
@@ -407,7 +409,7 @@
 
 							<div class="block2-txt flex-w flex-t p-t-14">
 								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+									<a href="product-detail.php" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 										Esprit Ruffle Shirt
 									</a>
 

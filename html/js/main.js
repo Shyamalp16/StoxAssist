@@ -308,3 +308,78 @@ function send_message(){
         })
     }
 }
+
+function user_reg(){
+    var name=jQuery("#name").val();
+    var email=jQuery("#email").val();
+    var mobile=jQuery("#mobile").val();
+    var password=jQuery("#password").val();
+
+    if(name==""){
+        alert("Enter Name Please");
+    }else if(email==""){
+        alert("Enter Email Please");
+    }else if(mobile==""){
+        alert("Enter Mobile Number Please");
+    }else if(password==""){
+        alert("Enter Your Password Please");
+    }else{
+        jQuery.ajax({
+            url:'reg_submit.php',
+            type:'post',
+            data:'name='+name+'&email='+email+'&mobile='+mobile+'&password='+password,
+            success:function(result){
+                if(result=='exists'){
+                    jQuery('.reg_error p').html('Email Already Exists');
+                }
+                if(result=='insert'){
+                    jQuery('.reg_error p').html('User Registered Successfully');
+                }
+            }
+        })
+    }
+}
+
+function user_login(){
+    var login_email=jQuery("#login_email").val();
+    var login_password=jQuery("#login_password").val();
+
+    if(login_email==""){
+        alert("Enter Email Please");
+    }else if(login_password==""){
+        alert("Enter Your Password Please");
+    }else{
+        jQuery.ajax({
+            url:'login_submit.php',
+            type:'post',
+            data:'login_email='+login_email+'&login_password='+login_password,
+            success:function(result){
+                if(result=='invalid'){
+                    jQuery('.reg_error p').html('Please Enter Valid Login Details');
+                }
+                if(result=='valid'){
+                    window.location.href='index.php'
+                }
+            }
+        })
+    }
+}
+
+function manageCart(pid,type){
+    if(type=='update'){
+        var qty=jQuery("#"+pid+"qty").val();    
+    }else{
+        var qty=jQuery("#qty").val();
+    }
+        jQuery.ajax({
+            url:'manageCart.php',
+            type:'post',
+            data:'pid='+pid+'&qty='+qty+'&type='+type,
+            success:function(result){
+                if(type=='update' || type=='delete'){
+                    window.location.reload();    
+                }
+                window.location.reload();  
+            }
+        });
+}
