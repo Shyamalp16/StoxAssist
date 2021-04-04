@@ -34,12 +34,15 @@
                                     <th class="column-5">Del</th>
 								</tr>
                                 <?php
+								$cart_total = 0;
+								$shipping=0;
                                 foreach($_SESSION['cart'] as $key=>$val){
                                 $productArr = get_product($con,'','',$key);
                                 $pname=$productArr[0]['name'];
                                 $pprice=$productArr[0]['price'];
                                 $pimage=$productArr[0]['image'];
                                 $qty=$val['qty'];
+								$cart_total=$cart_total+($pprice*$qty);
                                 ?>    
 								<tr class="table_row">
 									<td class="column-1">
@@ -63,6 +66,11 @@
                                 <?php } ?>
 							</table>
 						</div>
+						<br>
+						
+						<a href="index.php" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+							Continue Shopping
+						</a>
 
 						<!-- <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
 							<div class="flex-w flex-m m-r-20 m-tb-5">
@@ -89,19 +97,19 @@
 						<div class="flex-w flex-t bor12 p-b-13">
 							<div class="size-208">
 								<span class="stext-110 cl2">
-									Subtotal:
+									Total:
 								</span>
 							</div>
 
 							<div class="size-209">
 								<span class="mtext-110 cl2">
-									$79.65
+									$<?php echo $cart_total?>
 								</span>
 							</div>
 						</div>
 
 						<div class="flex-w flex-t bor12 p-t-15 p-b-30">
-							<div class="size-208 w-full-ssm">
+							<!-- <div class="size-208 w-full-ssm">
 								<span class="stext-110 cl2">
 									Shipping:
 								</span>
@@ -109,23 +117,8 @@
 
 							<div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
 								<p class="stext-111 cl6 p-t-2">
-									There are no shipping methods available. Please double check your address, or contact us if you need any help.
+									INSERT DATA HERE LATER ON
 								</p>
-								
-								<div class="p-t-15">
-									<span class="stext-112 cl8">
-										Calculate Shipping
-									</span><hr>
-
-									<div class="bor8 bg0 m-b-12">
-										<input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="state" placeholder="State /  country">
-									</div>
-
-									<div class="bor8 bg0 m-b-22">
-										<input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="Postcode / Zip">
-									</div>
-
-								</div>
 							</div>
 						</div>
 
@@ -138,14 +131,21 @@
 
 							<div class="size-209 p-t-1">
 								<span class="mtext-110 cl2">
-									$79.65
+								$<?php echo $cart_subtotal + $shipping?>
 								</span>
-							</div>
+							</div> -->
 						</div>
 
-						<button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+						<?php if(isset($_SESSION['USER_LOGIN'])){ ?>
+						<a href="checkout.php" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
 							Proceed to Checkout
-						</button>
+						</a>
+						<?php }else{ ?>
+						<a href="login.php" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+							Please Login First
+						</a>
+						<?php } ?>
+
 					</div>
 				</div>
 			</div>

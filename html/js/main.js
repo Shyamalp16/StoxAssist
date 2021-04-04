@@ -334,6 +334,7 @@ function user_reg(){
                 }
                 if(result=='insert'){
                     jQuery('.reg_error p').html('User Registered Successfully');
+                    window.location.href='index.php';
                 }
             }
         })
@@ -358,7 +359,7 @@ function user_login(){
                     jQuery('.reg_error p').html('Please Enter Valid Login Details');
                 }
                 if(result=='valid'){
-                    window.location.href='index.php'
+                    window.location.href='index.php';
                 }
             }
         })

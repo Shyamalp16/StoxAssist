@@ -992,7 +992,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   width: 100%;
 }
 
-.header-cart-item-img::after {
+/* .header-cart-item-img::after {
   content: '\e870';
   font-family: Linearicons-Free;
   font-size: 16px;
@@ -1015,7 +1015,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   -o-transition: all 0.3s;
   -moz-transition: all 0.3s;
   opacity: 0;
-}
+} */
 
 .header-cart-item-img:hover:after {
   opacity: 1;
