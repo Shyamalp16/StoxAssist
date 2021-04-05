@@ -16,6 +16,49 @@
 		</script>
 		<?php
 	}
+
+	$shipping=0;
+	$cart_total = 0;
+	foreach($_SESSION['cart'] as $key=>$val){ 
+		$productArr = get_product($con,'','',$key);
+		$pprice=$productArr[0]['price'];
+		$qty=$val['qty'];
+		$cart_total=$cart_total+($pprice*$qty);
+		$final_total=$cart_total+$shipping;
+	}
+
+	if(isset($_POST['submit'])){
+		$user_id=$_SESSION['USER_ID'];
+		$address=get_safe_value($con,$_POST['address']);
+		$city=get_safe_value($con,$_POST['city']);
+		$state=get_safe_value($con,$_POST['state']);
+		$pincode=get_safe_value($con,$_POST['pincode']);
+		$payment_type=get_safe_value($con,$_POST['payment_type']);
+		$total_price=$final_total;
+		$total_price;
+		$payment_status='pending';
+		if($payment_type=='cod'){
+			$payment_status='success';
+		}
+		$order_status='pending';
+		$added_on=date('Y-m-d H:i:s');
+		mysqli_query($con,"insert into orders(user_id,address,city,state,pincode,payment_type,total_price,payment_status,order_status,added_on) values('$user_id','$address','$city','$state','$pincode','$payment_type','$total_price','$payment_status','$order_status','$added_on')");
+
+
+		$order_id=mysqli_insert_id($con);
+		foreach($_SESSION['cart'] as $key=>$val){ 
+			$productArr = get_product($con,'','',$key);
+			$pprice=$productArr[0]['price'];
+			$qty=$val['qty'];
+			mysqli_query($con,"insert into order_detail(order_id,product_id,qty,price) values('$order_id','$key','$qty','$pprice')");
+		}
+		?>
+		<script>
+			window.location.href="thank_you.php";
+		</script>
+		<?php
+		unset($_SESSION['cart']);		
+	}
 ?>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <br>
@@ -35,7 +78,7 @@
 	</div>
 		
 	<!-- Shoping Cart -->
-	<form class="bg0 p-t-75 p-b-85">
+	<!-- <form class="bg0 p-t-75 p-b-85"> -->
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
@@ -52,10 +95,9 @@
 							</a>
 						</div>
 
-
+						<form method="post">
 						<div id="address" class="w3-container checkout" >
 							<h2>Enter Address Details</h2><br>
-							<form method="post">
 								<div class="bor8 m-b-20 how-pos4-parent">
 									<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" id="address" name="address" placeholder="Street Address" required>
 								</div>
@@ -76,19 +118,19 @@
 						<div id="payment" class="w3-container checkout" style="display:none"	>
 							<h2>Select Your Payment Method</h2><br>	
 							<div class="form-check">
-  								<input class="form-check-input" type="radio" name="payment_method" id="cod" required/>
-  								<label class="form-check-label" for="flexRadioDefault1">
+  								<input class="form-check-input" type="radio" name="payment_type" value="cod" required/>
+  								<label class="form-check-label" for="cod">
     								Cash On Delivery
   								</label>
 							</div>
 							<div class="form-check">
-  								<input class="form-check-input" type="radio" name="payment_method" id="payu" required/>
-  								<label class="form-check-label" for="flexRadioDefault1">
+  								<input class="form-check-input" type="radio" name="payment_type" value="payu" required/>
+  								<label class="form-check-label" for="payu">
 									PayU Gateway
 								</label>
 							</div><br>
 						</div>
-						<input type="submit" name="submit" value="Place Order" class="flex-c-m stext-101 cl0 size-101 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+						<input type="submit" href="#" name="submit" value="Place Order" class="flex-c-m stext-101 cl0 size-101 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" />
 						</form>	
 						</div>
 					</div><br><br>
@@ -101,15 +143,14 @@
 						</h4>
 						
 						<?php
-						$shipping=0;
-						$cart_total = 0;
+						$subtotal=0;
 						foreach($_SESSION['cart'] as $key=>$val){ 
 							$productArr = get_product($con,'','',$key);
 							$pname=$productArr[0]['name'];
 							$pprice=$productArr[0]['price'];
 							$pimage=$productArr[0]['image'];
 							$qty=$val['qty'];
-							$cart_total=$cart_total+($pprice*$qty);
+							$subtotal=$subtotal+($pprice*$qty);
 						?>
 						<div class="flex-w flex-t bor12 p-b-13">
 							<div class="size-208">
@@ -133,7 +174,7 @@
 
 							<div class="size-209">
 								<span class="mtext-110 cl2">
-									$<?php echo $cart_total?>
+									$<?php echo $subtotal?>
 								</span>
 							</div>
 						</div>
@@ -161,7 +202,7 @@
 
 							<div class="size-209 p-t-1">
 								<span class="mtext-110 cl2">
-								$<?php echo $cart_total + $shipping?>
+								$<?php echo $subtotal + $shipping?>
 								</span>
 							</div>
 						</div>
@@ -172,7 +213,7 @@
 				</div>
 			</div>
 		</div>
-	</form>
+	<!-- </form> -->
 	<?php
     require('footer.php');
     ?>

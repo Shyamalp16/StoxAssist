@@ -45,10 +45,12 @@
 					<div class="left-top-bar">
 				</div>
 					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
+						<!-- <a href="#" class="flex-c-m trans-04 p-lr-25">
 							My Account
-						</a>
-						<?php if(isset($_SESSION['USER_LOGIN'])){
+						</a> -->
+						<?php if(isset($_SESSION['USER_LOGIN'])){ 
+							echo '<a href="#" class="flex-c-m trans-04 p-lr-25">My Account</a>';
+							echo '<a href="my_orders.php" class="flex-c-m trans-04 p-lr-25">My Orders</a>';
 							echo '<a href="logout_submit.php" class="flex-c-m trans-04 p-lr-25">Logout</a>';
 						}else{ 
 							echo '<a href="login.php" class="flex-c-m trans-04 p-lr-25">Login</a>';
@@ -218,6 +220,7 @@
 			</div>
 			<div class="header-cart-content flex-w js-pscroll">
 			<?php
+			if(isset($_SESSION['cart'])) { 
 					$cart_total=0;
 					foreach($_SESSION['cart'] as $key=>$val){
 					$productArr = get_product($con,'','',$key);
@@ -248,6 +251,10 @@
 						Total: $<?php echo $cart_total?> (<?php echo $total?> Items) <br>
 						<!-- Total: <?php echo $total?> Items <br> -->
 					</div>
+					<?php }else{ 
+						echo "Cart Empty";
+					} ?>
+					<?php if(isset($_SESSION['USER_LOGIN'])){ ?>
 					<div class="header-cart-buttons flex-w w-full">
 						<a href="cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
 							View Cart
@@ -256,6 +263,11 @@
 							Check Out
 						</a>
 					</div>
+					<?php }else{ ?>
+						<a href="login.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+						Login First
+					</a>
+					<?php } ?>
 				</div>
 			</div>
 		</div>

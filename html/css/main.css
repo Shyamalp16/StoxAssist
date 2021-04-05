@@ -2575,8 +2575,16 @@ input.num-product::-webkit-inner-spin-button {
   width: calc(100% - 78px);
 }
 
+.padbot {
+  padding-bottom: -50px !important;
+}
+
 .size-208 {
   width: 34.5%;
+}
+
+.moimg {
+  width: 20%;
 }
 
 .size-209 {
