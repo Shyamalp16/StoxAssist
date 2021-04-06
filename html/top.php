@@ -252,7 +252,7 @@
 						<!-- Total: <?php echo $total?> Items <br> -->
 					</div>
 					<?php }else{ 
-						echo "Cart Empty";
+						echo "Cart Empty"; 
 					} ?>
 					<?php if(isset($_SESSION['USER_LOGIN'])){ ?>
 					<div class="header-cart-buttons flex-w w-full">
@@ -264,9 +264,11 @@
 						</a>
 					</div>
 					<?php }else{ ?>
-						<a href="login.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-						Login First
-					</a>
+						<div class="header-cart-buttons flex-w w-full">
+							<a href="login.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+								Login First
+							</a>
+						</div>
 					<?php } ?>
 				</div>
 			</div>

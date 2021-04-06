@@ -1,96 +1,22 @@
-<?php
-    require('functions.inc.php');
+<?php 
     require('connection.inc.php');
+    require('functions.inc.php');
+    $sql = "select * from orders order by id asc";
+    $res = mysqli_query($con,$sql);
 
-    $categories_id='';
-    $name='';
-    $mrp='';
-    $price='';
-    $qty='';
-    $image='';
-    $short_desc='';
-    $description='';
-    $meta_title='';
-    $meta_desc='';
-    $meta_keyword='';
-    $msg='';
-    $image_required = 'required';
-
-    if(isset($_GET['id']) && $_GET['id'] != ''){
-        $image_required='';
-        $id = get_safe_value($con,$_GET['id']);
-        $res = mysqli_query($con,"select * from product where id='$id'");
-        $check = mysqli_num_rows($res); 
-        if($check > 0 ){
-            $row = mysqli_fetch_assoc($res);
-            $categories_id=$row['categories_id'];
-            $name = $row['name'];
-            $mrp = $row['mrp'];
-            $price = $row['price'];
-            $qty = $row['qty'];
-            $short_desc = $row['short_desc'];
-            $description = $row['description'];
-            $meta_title = $row['meta_title'];
-            $meta_desc = $row['meta_desc'];
-            $meta_keyword = $row['meta_keyword'];
-        }else{
-            header('location: products.php');
-            die();
+    if(isset($_GET['type']) && $_GET['type']!=''){
+        $type=get_safe_value($con,$_GET['type']);
+        
+        if($type=='delete'){
+            $id=get_safe_value($con,$_GET['id']);
+            $delete_status_sql="delete from users where id='$id'";
+            Header('Location: '.$_SERVER['PHP_SELF']);
+            mysqli_query($con,$delete_status_sql);
         }
     }
 
-    if(isset($_POST['submit'])){
-        $categories_id = get_safe_value($con,$_POST['categories_id']);
-        $name = get_safe_value($con,$_POST['name']);
-        $mrp = get_safe_value($con,$_POST['mrp']);
-        $price = get_safe_value($con,$_POST['price']);
-        $qty = get_safe_value($con,$_POST['qty']);
-        $short_desc=get_safe_value($con,$_POST['short_desc']);
-        $description=get_safe_value($con,$_POST['description']);
-        $meta_title=get_safe_value($con,$_POST['meta_title']);
-        $meta_desc=get_safe_value($con,$_POST['meta_desc']);
-        $meta_keyword=get_safe_value($con,$_POST['meta_keyword']);
-
-        $res = mysqli_query($con, "select * from product where name='$name'");
-        $check=mysqli_num_rows($res);
-        if($check > 0){
-            if(isset($_GET['id']) && $_GET['id'] != ''){
-                $getData = mysqli_fetch_assoc($res);
-                if($id== $getData['id']){
-
-                }else{
-                    $msg="This Product Already Exists";    
-                }
-            }else{
-                $msg="This Product Already Exists";
-            }
-        }
-
-        if($_FILES['image']['type'] != '' && ($_FILES['image']['type'] != 'image/png' && $_FILES['image']['type'] != 'image/jpg' && $_FILES['image']['type'] != 'image/jpeg' )){ 
-            $msg="Please Upload Only Image Formats";
-        }
-
-        if($msg==''){
-            if(isset($_GET['id']) && $_GET['id'] != ''){
-                if($_FILES['image']['name']!=''){
-                    $image=rand(11111111,9999999).'_'.$_FILES['image']['name'];
-                    move_uploaded_file($_FILES['image']['tmp_name'],PRODUCT_IMAGE_SERVER_PATH.$image);
-                    $updated="update product set categories_id='$categories_id',name='$name',mrp='$mrp',price='$price',qty='$qty',short_desc='$short_desc',description='$description',meta_title='$meta_title',meta_desc='$meta_desc',meta_keyword='$meta_keyword',image='$image' where id='$id'";
-                }else{
-                    $updated="update product set categories_id='$categories_id',name='$name',mrp='$mrp',price='$price',qty='$qty',short_desc='$short_desc',description='$description',meta_title='$meta_title',meta_desc='$meta_desc',meta_keyword='$meta_keyword' where id='$id'";
-                }
-                mysqli_query($con,$updated);
-               }else{
-                $image=rand(11111111,9999999).'_'.$_FILES['image']['name'];
-                move_uploaded_file($_FILES['image']['tmp_name'],PRODUCT_IMAGE_SERVER_PATH.$image);
-                mysqli_query($con,"insert into product(categories_id,name,mrp,price,qty,short_desc,description,meta_title,meta_desc,meta_keyword,status,image) values('$categories_id','$name','$mrp','$price','$qty','$short_desc','$description','$meta_title','$meta_desc','$meta_keyword',1,'$image')");   
-               }
-            header('location:products.php');
-            die();
-        }
-    }
-
-
+    $sql = "select * from orders order by id desc";
+    $res = mysqli_query($con,$sql);
 ?>
 
 <!DOCTYPE html>
@@ -104,7 +30,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Edit Product</title>
+    <title>Orders</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -114,7 +40,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
 
 </head>
 
@@ -131,7 +57,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">StoxAssisst</div>
+                <div class="sidebar-brand-text mx-3">StoxAssist</div>
             </a>
 
             <!-- Divider -->
@@ -150,7 +76,7 @@
                     <span>Categories</span></a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="products.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Products</span></a>
@@ -161,8 +87,14 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Queries</span></a>
             </li>
+
+            <li class="nav-item ">
+                <a class="nav-link" href="users.php">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Users</span></a>
+            </li>
 			
-			<li class="nav-item ">
+			<li class="nav-item active">
                 <a class="nav-link" href="orders.php">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Orders</span></a>
@@ -220,13 +152,13 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
                     aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Pages</span>
                 </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
@@ -480,145 +412,45 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Edit Product</h1>
-                    <div class="card o-hidden border-0 shadow-lg my-5">
-                        <div class="card-body p-0">
-                            <div class="row">
-                                <div class="col-lg-10 d-none d-lg-block">
-                                    <div class="col-lg-7">
-                                        <div class="p-5">
-                                            <div class="text-center">
-                                                <h1 class="h4 text-gray-900 mb-4">Edit Product</h1>
-                                            </div>
-                                            <form class="user" method="post" enctype="multipart/form-data">
-                                                <div class="form-group">
-                                                    <div class="col-lg-10 d-none d-lg-block">    
-                                                        <label for="categories" class="form-control-label">New Category</label>
-                                                        <select class="form-control" name="categories_id" autofocus>
-                                                            <option>Select New Category</option>
-                                                            <?php
-                                                            $res = mysqli_query($con, "select id,categories from categories order by categories asc");
-                                                            while($row=mysqli_fetch_assoc($res)){
-                                                                if($row['id']==$categories_id){
-                                                                    echo "<option selected value=".$row['id'].">".$row['categories']."</option>";
-                                                                }else{
-                                                                    echo "<option value=".$row['id'].">".$row['categories']."</option>";
-                                                                }
-                                                                
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                    <br>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-lg-10 d-none d-lg-block">    
-                                                        <label for="categories" class="form-control-label">Product Name</label>
-                                                        <input type="text" class="form-control form-control-user" name="name" id="name"
-                                                        placeholder="Product Name" value="<?php echo $name ?>" required> 
-                                                    </div>
-                                                    <br>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-lg-10 d-none d-lg-block">    
-                                                        <label for="categories" class="form-control-label">MRP</label>
-                                                        <input type="text" class="form-control form-control-user" name="mrp" id="mrp"
-                                                        placeholder="MRP" value="<?php echo $mrp ?>" required> 
-                                                    </div>
-                                                    <br>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-lg-10 d-none d-lg-block">    
-                                                        <label for="categories" class="form-control-label">Price</label>
-                                                        <input type="text" class="form-control form-control-user" name="price" id="price"
-                                                        placeholder="Product Price" value="<?php echo $price ?>" required> 
-                                                    </div>
-                                                    <br>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-lg-10 d-none d-lg-block">    
-                                                        <label for="categories" class="form-control-label">Quantity</label>
-                                                        <input type="text" class="form-control form-control-user" name="qty" id="qty"
-                                                        placeholder="Quantity" value="<?php echo $qty ?>" required> 
-                                                    </div>
-                                                    <br>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-lg-10 d-none d-lg-block">    
-                                                        <label for="categories" class="form-control-label">Image</label>
-                                                        <input type="file" class="form-control" name="image" id="image"
-                                                        placeholder="Image" <?php echo $image_required?> > 
-                                                    </div>
-                                                    <br>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-lg-10 d-none d-lg-block">    
-                                                        <label for="categories" class="form-control-label">Short Description</label>
-                                                        <textarea class="form-control form-control-user" name="short_desc" id="short_desc"
-                                                        placeholder="Short Description" required><?php echo $short_desc ?></textarea>
-                                                    </div>
-                                                    <br>
-                                                </div>
-
-                                                
-                                                <div class="form-group">
-                                                    <div class="col-lg-10 d-none d-lg-block">
-									                    <label for="categories" class=" form-control-label">Description</label>
-									                    <textarea class="form-control form-control-user" name="description" id="description" 
-                                                        placeholder="Enter product description" required> <?php echo $description ?> </textarea>
-                                                    </div>
-								                </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-lg-10 d-none d-lg-block">
-									                    <label for="categories" class=" form-control-label">Meta Title</label>
-									                    <textarea class="form-control form-control-user" name="meta_title" id="meta_title" 
-                                                        placeholder="Enter product Meta Title (OPTIONAL)"><?php echo $meta_title?></textarea>
-                                                    </div>
-								                </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-lg-10 d-none d-lg-block">
-									                    <label for="categories" class=" form-control-label">Meta Description</label>
-									                    <textarea class="form-control form-control-user" name="meta_desc" id="meta_desc" 
-                                                        placeholder="Enter Product Meta Description (OPTIONAL)"><?php echo $meta_desc?></textarea>
-                                                    </div>
-								                </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-lg-10 d-none d-lg-block">
-									                    <label for="categories" class=" form-control-label">Meta Keyword</label>
-									                    <textarea class="form-control form-control-user" name="meta_keyword" id="meta_keyword" 
-                                                        placeholder="Enter Product Meta Keyword (OPTIONAL)"><?php echo $meta_keyword?></textarea>
-                                                    </div>
-								                </div>
-
-                                                <div class="flex">
-                                                    <button href="#" class="btn btn-success btn-icon-split" name="submit" type="submit">
-                                                        <span class="icon text-white-50">   
-                                                            <i class="fas fa-check"></i>
-                                                        </span>
-                                                        <span class="text">Submit</span>
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                    <h1 class="h3 mb-4 text-gray-800">Orders</h1>
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Orders</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered nowrap" id="table_id" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Order Date</th>
+                                            <th>Address</th>
+                                            <th>Payment Type</th>
+                                            <th>Payment Status</th>
+											<th>Order Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php while($row = mysqli_fetch_assoc($res)){ ?>
+                                        <tr>
+                                        <td><a class="ptag" href="order_details.php?id=<?php echo $row['id']?>"><?php echo $row['id'] ?></a></td>
+                                            <td><?php echo $row['added_on'] ?></td>
+                                            <td><?php echo $row['address'] ?></td>
+                                            <td><?php echo $row['payment_type'] ?></td>
+                                            <td><?php echo $row['payment_status'] ?></td>
+											<td><?php echo $row['order_status'] ?></td>
+                                            <td>
+                                                <?php
+                                                    echo "<a href='?type=delete&id=".$row['id']."'><button class='btn btn-circle btn-danger'><i class='fas fa-trash'></i></button></a> &nbsp;";
+                                                ?>
+                                            </td>
+                                        </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>      
+                        </div>
                     </div>
-                    <div class="border-left-danger">
-                        <?php echo $msg?>
-                    </div>
-                    
-                </div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -645,6 +477,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+    </div>
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -659,7 +492,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -674,7 +507,21 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
+    <script src="js/demo/datatables-demo.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#table_id').DataTable({searching: false, paging: false, info: false, ordering:true, autoWidth: false, scrollX:false});
+        } );
+    </script>
 </body>
-
+<style>
+	.ptag {
+		color: inherit;
+	}
+</style>
 </html>

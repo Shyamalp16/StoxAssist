@@ -13,7 +13,7 @@
 						$count=0;
                         $uid=$_SESSION['USER_ID'];
                         // $res=mysqli_query($con,"select orders.*,product.name,product.image,product.price,product.id,order_detail.product_id from orders,product,order_detail where orders.user_id='$uid' and product.id=order_detail.product_id");
-						$res=mysqli_query($con,"select orders.*,product.name,product.image,product.price,order_detail.product_id from orders,product,order_detail where orders.user_id='$uid' and product.id=order_detail.product_id and orders.id=order_detail.id");
+						$res=mysqli_query($con,"select orders.*,order_status.name as order_status_name,product.name,product.image,product.price,order_detail.product_id from orders,order_status,product,order_detail where orders.user_id='$uid' and product.id=order_detail.product_id and orders.id=order_detail.id and order_status.id=orders.order_status");
 						// pr($res);
                         // $res=mysqli_query($con,"select * from orders where user_id='$uid'");
                         while($row=mysqli_fetch_assoc($res)){ 
@@ -44,6 +44,10 @@
 										</span>
 										<span>
 											<strong>Order ID:</strong> #<?php echo $row['id'] ?>
+											<span class="cl12 m-l-4 m-r-6">|</span>
+										</span>
+										<span>
+											<strong>Order Status:</strong>&nbsp;<?php echo $row['order_status_name'] ?>
 										</span>
 									</span>
 									<a href="order_details.php?id=<?php echo $row['id'] ?>" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">

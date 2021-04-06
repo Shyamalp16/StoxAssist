@@ -167,6 +167,12 @@
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Users</span></a>
             </li>
+			
+			<li class="nav-item ">
+                <a class="nav-link" href="orders.php">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Orders</span></a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
