@@ -2,7 +2,6 @@
     require('connection.inc.php');
 	require('functions.inc.php');
 	require('add_tocart.inc.php');
-	echo !extension_loaded('openssl')?"Not Available":"Available";
     $cat = mysqli_query($con,"select * from categories where status=1 order by categories asc");
     $cat_arr = array();
     while($row=mysqli_fetch_assoc($cat)){
@@ -103,7 +102,8 @@
 					
 					<!-- Logo desktop -->		
 					<a href="index.php" class="logo">
-						<img src="images/icons/logo-01.png" alt="IMG-LOGO">
+						<img src="images/icons/Screenshot-.png" alt="IMG-LOGO">
+						<!-- <img src="images/icons/logo-01.png" alt="IMG-LOGO"> -->
 					</a>
 
 					<!-- Menu desktop -->
@@ -304,7 +304,7 @@
 					<?php }else{ ?>
 						<div class="header-cart-buttons flex-w w-full">
 							<a href="login.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-								Login First
+								Login
 							</a>
 						</div>
 					<?php } ?>

@@ -5,17 +5,18 @@
 	<section class="section-slide">
 		<div class="wrap-slick1">
 			<div class="slick1">
-				<div class="item-slick1" style="background-image: url(images/slide-01.jpg);">
+				<!-- <div class="item-slick1" style="background-image: url(images/slide-01.jpg);"> -->
+				<div class="item-slick1" style="background-image: url(images/stock/8.jpg);">
 					<div class="container h-full">
 						<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
 							<div class="layer-slick1 animated visible-false" data-appear="fadeInDown" data-delay="0">
-								<span class="ltext-101 cl2 respon2">
-									WOMEN 
+								<span class="ltext-101 cl2 respon2" style="background-color:#FF5666; color:white;">
+									One Place For All Your AutoParts Needs  
 								</span>
 							</div>	
 							<div class="layer-slick1 animated visible-false" data-appear="fadeInUp" data-delay="800">
-								<h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
-									NEW SEASON
+								<h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1" style="color:#F7F9F7">
+									StoxAssist
 								</h2>
 							</div>
 							<div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
@@ -37,20 +38,49 @@
 				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
 					<!-- Block1 -->
 					<div class="block1 wrap-pic-w">
-						<img src="images/banner-01.jpg" alt="IMG-BANNER">
-						<a href="product.html" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+						<img src="images/stock/1.jpg" class="disp" alt="IMG-BANNER">
+						<a href="" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3 disabled">
 							<div class="block1-txt-child1 flex-col-l">
 								<span class="block1-name ltext-102 trans-04 p-b-8">
-									Women
+									
 								</span>
 								<span class="block1-info stext-102 trans-04">
-									Spring 2018
+									
 								</span>
 							</div>
-							<div class="block1-txt-child2 p-b-4 trans-05">
-								<div class="block1-link stext-101 cl0 trans-09">
-									Shop Now
-								</div>
+						</a>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+					<!-- Block1 -->
+					<div class="block1 wrap-pic-w">
+						<img src="images/stock/4.jpg" alt="IMG-BANNER">
+						<a href="#" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3 disabled">
+							<div class="block1-txt-child1 flex-col-l">
+								<span class="block1-name ltext-102 trans-04 p-b-8">
+									
+								</span>
+								<span class="block1-info stext-102 trans-04">
+									
+								</span>
+							</div>
+						</a>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+					<!-- Block1 -->
+					<div class="block1 wrap-pic-w">
+						<img src="images/stock/3.jpg" alt="IMG-BANNER">
+						<a href="#" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3 disabled">
+							<div class="block1-txt-child1 flex-col-l">
+								<span class="block1-name ltext-102 trans-04 p-b-8">
+									
+								</span>
+								<span class="block1-info stext-102 trans-04">
+									
+								</span>
 							</div>
 						</a>
 					</div>
@@ -108,3 +138,13 @@
 <?php
     require('footer.php');
 ?>
+
+<style>
+a.disabled {
+  cursor: default;
+}
+
+img.disp {
+	object-fit:contain;
+}
+</style>

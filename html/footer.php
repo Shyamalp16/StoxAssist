@@ -15,13 +15,16 @@
 					</h4>
 
 					<ul>
-					<?php foreach($cat_arr as $list){ 
+					<?php 
+					$i=0;
+					foreach($cat_arr as $list){ 
+						$i++;
 					?>
 						<li class="p-b-10">
 							<a href="categories.php?id=<?php echo $list['id']?>" class="stext-107 cl7 hov-cl1 trans-04">
 								<?php echo $list['categories']?>
 							</a>
-						</li>
+						</li> <?php if($i>=3){ break; } ?>
 						<?php } ?>
 					</ul>
 				</div>
@@ -33,8 +36,8 @@
 
 					<ul>
 						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Track Order
+							<a href="contact.php" class="stext-107 cl7 hov-cl1 trans-04">
+								Contact Us 
 							</a>
 						</li>
 					</ul>

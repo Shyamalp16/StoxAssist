@@ -432,7 +432,8 @@
                                     <tbody>
                                         <?php
 										$order_id=get_safe_value($con,$_GET['id']);
-										$res=mysqli_query($con,"select distinct(order_detail.id), order_detail.*,product.name,product.image,orders.address,orders.city,orders.state,orders.pincode,orders.order_status from order_detail,product,orders where order_detail.order_id='$order_id' and product.id=order_detail.product_id");
+										
+                                        $res=mysqli_query($con,"select distinct(order_detail.id), order_detail.*,product.name,product.image,orders.address,orders.city,orders.state,orders.pincode,orders.order_status from order_detail,product,orders where order_detail.order_id='$order_id' and product.id=order_detail.product_id and orders.id=order_detail.id");
 										$total_price=0;
 										while($row=mysqli_fetch_array($res)){
                                         $total_price=$total_price+($row['qty']*$row['price']); 
