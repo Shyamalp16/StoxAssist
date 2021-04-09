@@ -1,4 +1,11 @@
 	<!-- Footer -->
+	<?php 
+		    $cat = mysqli_query($con,"select * from categories where status=1 order by categories asc");
+			$cat_arr = array();
+			while($row=mysqli_fetch_assoc($cat)){
+				$cat_arr[] = $row;
+			}
+	?>
 	<footer class="bg3 p-t-75 p-b-32">
 		<div class="container">
 			<div class="row">
@@ -8,11 +15,14 @@
 					</h4>
 
 					<ul>
+					<?php foreach($cat_arr as $list){ 
+					?>
 						<li class="p-b-10">
-							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-								Women
+							<a href="categories.php?id=<?php echo $list['id']?>" class="stext-107 cl7 hov-cl1 trans-04">
+								<?php echo $list['categories']?>
 							</a>
 						</li>
+						<?php } ?>
 					</ul>
 				</div>
 

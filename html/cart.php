@@ -34,15 +34,16 @@
                                     <th class="column-5">Del</th>
 								</tr>
                                 <?php
-								$cart_total = 0;
-								$shipping=0;
-                                foreach($_SESSION['cart'] as $key=>$val){
-                                $productArr = get_product($con,'','',$key);
-                                $pname=$productArr[0]['name'];
-                                $pprice=$productArr[0]['price'];
-                                $pimage=$productArr[0]['image'];
-                                $qty=$val['qty'];
-								$cart_total=$cart_total+($pprice*$qty);
+								if(isset($_SESSION['cart'])){
+									$cart_total = 0;
+									$shipping=0;
+									foreach($_SESSION['cart'] as $key=>$val){
+									$productArr = get_product($con,'','',$key);
+									$pname=$productArr[0]['name'];
+									$pprice=$productArr[0]['price'];
+									$pimage=$productArr[0]['image'];
+									$qty=$val['qty'];
+									$cart_total=$cart_total+($pprice*$qty);
                                 ?>    
 								<tr class="table_row">
 									<td class="column-1">
@@ -64,6 +65,7 @@
                                     </svg></a></td>
 								</tr>
                                 <?php } ?>
+								<?php } ?>
 							</table>
 						</div>
 						<br>
@@ -103,7 +105,11 @@
 
 							<div class="size-209">
 								<span class="mtext-110 cl2">
-									$<?php echo $cart_total?>
+									<?php if(isset($_SESSION['cart'])){ ?>
+										$<?php echo $cart_total?>
+									<?php }else{ ?>
+										<?php echo "Cart Empty"?>
+										<?php } ?>
 								</span>
 							</div>
 						</div>

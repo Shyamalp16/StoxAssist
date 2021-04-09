@@ -2,6 +2,7 @@
     require('connection.inc.php');
 	require('functions.inc.php');
 	require('add_tocart.inc.php');
+	echo !extension_loaded('openssl')?"Not Available":"Available";
     $cat = mysqli_query($con,"select * from categories where status=1 order by categories asc");
     $cat_arr = array();
     while($row=mysqli_fetch_assoc($cat)){
@@ -10,12 +11,49 @@
 
 	$ob = new add_tocart();
 	$total=$ob->total();
+
+	$page=$_SERVER['SCRIPT_NAME'];
+	$page_arr=explode('/',$page);
+	$current_page=$page_arr[count($page_arr)-1];
+	$meta_title="StoxAssist";
+
+	if($current_page=='product-detail.php'){
+		$product=get_safe_value($con,$_GET['id']);
+		$meta=mysqli_fetch_assoc(mysqli_query($con,"select * from product where id='$product'"));
+		$meta_title=$meta['meta_title'];
+		$meta_desc=$meta['meta_desc'];
+		$meta_key=$meta['meta_keyword'];
+	}	
+
+	if($current_page=='categories.php'){
+		$meta_title="Categories";
+	}
+	if($current_page=='categories.php'){
+		$meta_title="Categories";
+	}
+	if($current_page=='my_orders.php'){
+		$meta_title="Your Orders";
+	}
+	if($current_page=='order_details.php'){
+		$meta_title="Order Details";
+	}
+	if($current_page=='cart.php'){
+		$meta_title="Your Cart";
+	}
+	if($current_page=='checkout.php'){
+		$meta_title="Checkout";
+	}
+	if($current_page=='thank_you.php'){
+		$meta_title="Order Placed";
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>StoxAssist</title>
+	<title><?php echo $meta_title ?></title>
 	<meta charset="UTF-8">
+	<meta name="description" content="<?php echo $meta_desc?>">
+	<meta name="keyword" content="<?php echo $meta_key?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -196,7 +234,7 @@
 					<img src="images/icons/icon-close2.png" alt="CLOSE">
 				</button>
 
-				<form class="wrap-search-header flex-w p-l-15">
+				<form action="search.php" method="get" class="wrap-search-header flex-w p-l-15">
 					<button class="flex-c-m trans-04">
 						<i class="zmdi zmdi-search"></i>
 					</button>

@@ -353,7 +353,7 @@
 
 
 	<!-- Related Products -->
-	<section class="sec-relate-product bg0 p-t-45 p-b-105">
+	<!-- <section class="sec-relate-product bg0 p-t-45 p-b-105">
 		<div class="container">
 			<div class="p-b-45">
 				<h3 class="ltext-106 cl5 txt-center">
@@ -361,11 +361,11 @@
 				</h3>
 			</div>
 
-			<!-- Slide2 -->
+			Slide2
 			<div class="wrap-slick2">
 				<div class="slick2">
 					<div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-						<!-- Block2 -->
+						Block2
 						<div class="block2">
 							<div class="block2-pic hov-img0">
 								<img src="images/product-01.jpg" alt="IMG-PRODUCT">
@@ -394,7 +394,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> -->
 
 
 
