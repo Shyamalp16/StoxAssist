@@ -37,6 +37,7 @@
                     <span class="ml-auto"><a href="forgot.php" class="forgot-pass">Forgot Password</a></span> 
                   </div>
                   <input type="button" onclick="user_login()" value="Log In" class="btn btn-pill text-white btn-block btn-primary">
+                  <span class="d-block text-center my-4 text-muted msg" style="color:red;"> </span>
                   <span class="d-block text-center my-4 text-muted"> or Register <a href="register.php">Here</a></span>
                 </form>
                 <br>
@@ -57,4 +58,11 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
   </body>
+  <style>
+    .msg {
+      font-weight: 900;
+      text-decoration: underline;
+      color: red!important;
+    }
+  </style>
 </html>

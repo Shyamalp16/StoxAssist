@@ -37,7 +37,8 @@
 						<div class="bor8 m-b-30">
 							<textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" id="msg" name="msg" placeholder="How Can We Help?"></textarea>
 						</div>
-
+						<strong><span class="d-block text-center my-4 text-muted validation">  </span></strong>
+						<strong><span class="d-block text-center my-4 text-muted done">  </span></strong>
 						<button type="button" class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer" onclick="send_message()">
 							Submit
 						</button>
@@ -95,6 +96,18 @@
 				</div>
 			</div>
 		</div>
+
+		<style>
+		.validation {
+			text-decoration: underline;
+			color: red!important;
+		}
+
+		.done {
+			text-decoration: underline;
+			color: #006666!important;
+		}
+  </style>
 	</section>	
 <?php
     require('footer.php');

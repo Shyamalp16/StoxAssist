@@ -30,6 +30,8 @@
 		$city=get_safe_value($con,$_POST['city']);
 		$pincode=get_safe_value($con,$_POST['pincode']);
 		$payment_type=get_safe_value($con,$_POST['payment_type']);
+
+
 		$user_id=$_SESSION['USER_ID'];
 		foreach($_SESSION['cart'] as $key=>$val){
 			$productArr=get_product($con,'','',$key);
@@ -170,20 +172,24 @@
 						<div id="address" class="w3-container checkout" >
 							<h2>Enter Address Details</h2><br>
 								<div class="bor8 m-b-20 how-pos4-parent">
-									<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" id="address" name="address" placeholder="Street Address" required>
+									<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30 addr" onblur="validateA();" type="text" id="address" name="address" placeholder="Street Address" required>
 								</div>
+								<span id="errA" class="msg" style="display:none">  </span> 
 
 								<div class="bor8 m-b-20 how-pos4-parent">
-									<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" id="city" name="city" placeholder="City" required>
+									<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" onblur="validateC();" type="text" id="city" name="city" placeholder="City" required>
 								</div>
+								<span id="errC" class="msg" style="display:none">  </span> 
 
 								<div class="bor8 m-b-20 how-pos4-parent">
-									<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" id="state" name="state" placeholder="State" required>
+									<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" onblur="validateS();" type="text" id="state" name="state" placeholder="State" required>
 								</div>
+								<span id="errS" class="msg" style="display:none">  </span> 
 
 								<div class="bor8 m-b-20 how-pos4-parent">
-									<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" id="pincode" name="pincode" placeholder="Zipcode" required>
+									<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"  onblur="validateP();" type="text" id="pincode" name="pincode" placeholder="Zipcode" required>
 								</div>
+								<span id="errP" class="msg" style="display:none">  </span> 
 						</div>
 
 						<div id="payment" class="w3-container checkout" style="display:none"	>
@@ -201,7 +207,7 @@
 								</label>
 							</div><br>
 						</div>
-						<input type="submit" href="#" name="submit" value="Place Order" class="flex-c-m stext-101 cl0 size-101 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" />
+						<input type="submit" onclick="validate();" href="#" name="submit" value="Place Order" class="flex-c-m stext-101 cl0 size-101 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" />
 						</form>	
 						</div>
 					</div><br><br>
@@ -294,6 +300,10 @@
 			height: 100px;
 			object-fit: contain;
 		}
+
+		.msg {
+			font-weight: 900;
+    	}
 	</style>
 
 <script>
@@ -309,5 +319,50 @@ function openTab(evt, tabName) {
   }
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.firstElementChild.className += " w3-border-red";
+}
+
+
+function validateA(){
+	var address = jQuery('.addr').val();
+	
+	if(address==""){
+		jQuery("#errA").html('Enter Address Please');
+		jQuery("#errA").show();
+	}else{
+		jQuery("#errA").hide();
+	}
+}
+
+function validateC(){
+	var city = jQuery('#city').val();
+
+	if(city==""){
+		jQuery("#errC").html('Enter City Please');
+		jQuery("#errC").show();
+	}else{
+		jQuery("#errC").hide();
+	}
+}
+
+function validateS(){
+	var state = jQuery('#state').val();
+
+	if(state==""){
+		jQuery("#errS").html('Enter State Please');
+		jQuery("#errS").show();
+	}else{
+		jQuery("#errS").hide();
+	}
+}
+
+function validateP(){
+	var pin = jQuery('#pincode').val();
+
+	if(pin==""){
+		jQuery("#errP").html('Enter Pincode Please');
+		jQuery("#errP").show();
+	}else{
+		jQuery("#errP").hide();
+	}
 }
 </script>

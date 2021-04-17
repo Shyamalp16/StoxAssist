@@ -290,20 +290,21 @@ function send_message(){
     var message=jQuery("#msg").val();
 
     if(name==""){
-        alert("Enter Name Please");
+        jQuery('.validation').html('Please Enter Name.');
     }else if(email==""){
-        alert("Enter Email Please");
+        jQuery('.validation').html('Please Enter Email Address.');
     }else if(mobile==""){
-        alert("Enter Mobile Number Please");
+        jQuery('.validation').html('Please Enter Mobile No.');
     }else if(message==""){
-        alert("Enter Your Query Please");
+        jQuery('.validation').html('Please Enter Your Query In Detail');
     }else{
         jQuery.ajax({
             url:'send_message.php',
             type:'post',
             data:'name='+name+'&email='+email+'&mobile='+mobile+'&message='+message,
             success:function(result){
-                alert(result);
+                jQuery('.validation').hide();
+                jQuery('.done').html('Your Message Has Been Sent, Please Wait Until Someone Reaches Out To You!');
             }
         })
     }
@@ -346,9 +347,10 @@ function user_login(){
     var login_password=jQuery("#login_password").val();
 
     if(login_email==""){
-        alert("Enter Email Please");
+        // alert("Enter Email Please");
+        jQuery('.msg').html('Please Enter Email Address');
     }else if(login_password==""){
-        alert("Enter Your Password Please");
+        jQuery('.msg').html('Please Enter Your Password');
     }else{
         jQuery.ajax({
             url:'login_submit.php',
@@ -356,7 +358,7 @@ function user_login(){
             data:'login_email='+login_email+'&login_password='+login_password,
             success:function(result){
                 if(result=='invalid'){
-                    jQuery('.reg_error p').html('Please Enter Valid Login Details');
+                    jQuery('.msg').html('Please Enter Valid Login Details');
                 }
                 if(result=='valid'){
                     window.location.href='index.php';
