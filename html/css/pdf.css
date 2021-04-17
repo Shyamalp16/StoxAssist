@@ -1,0 +1,109 @@
+
+        .ptag {
+			color: inherit;
+		}
+
+        .icon {
+            display: flex;
+            align-items: center;
+            margin:auto;
+            padding-top:60px;
+        }
+
+        .form {
+            display: flex;
+            justify-content:center;
+        }
+        .p-b-85, .p-tb-85, .p-all-85 {padding-bottom: 85px;}
+
+        .p-t-75, .p-tb-75, .p-all-75 {padding-top: 75px;}
+
+        .m-lr-auto {margin-left: auto; margin-right: auto;}
+
+        .m-b-50, .m-tb-50, .m-all-50 {margin-bottom: 50px;}
+
+        .m-r--38, .m-lr--38, .m-all--38 {margin-right: -38px;}
+
+        .m-l-25, .m-lr-25, .m-all-25 {margin-left: 25px;}
+
+        .container {max-width: 1380px;}
+
+        .wrap-table-shopping-cart {
+            overflow: auto;
+            border-left: 1px solid #e6e6e6;
+            border-right: 1px solid #e6e6e6;
+        }
+
+        .table-shopping-cart {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 680px;
+        }
+
+        .table-shopping-cart tr {
+            border-top: 1px solid #e6e6e6;
+            border-bottom: 1px solid #e6e6e6;
+        }
+
+        .table-shopping-cart .column-1 {
+            width: 133px;
+            padding-left: 50px;
+        }
+
+        .table-shopping-cart .column-2 {
+            width: 220px;
+            font-size:15px;
+        }
+
+        .table-shopping-cart .column-3 {
+            width: 120px;
+            font-size:16px;
+        }
+
+        .table-shopping-cart .column-4 {
+            width: 145px;
+            text-align: right;
+        }
+
+        .table-shopping-cart .column-5 {
+        width: 172px;
+        padding-right: 50px;
+        text-align: right;
+        font-size: 16px;
+        }
+
+        .how-itemcart1 img {
+            width: 100%;
+        }
+
+        .how-itemcart1 {
+            width: 60px;
+            position: relative;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .table-shopping-cart .table_head th {
+            font-family: Poppins-Bold;
+            font-size: 13px;
+            color: #555;
+            text-transform: uppercase;
+            line-height: 1.6;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .table-shopping-cart .table_row td.column-1 {
+            padding-bottom: 30px;
+        }
+
+        .table-shopping-cart .table_row {
+            height: 185px;
+        }
+
+        .table-shopping-cart td {
+            font-family: Poppins-Regular;
+            color: #555;
+            line-height: 1.6;
+        }
+

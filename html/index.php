@@ -19,11 +19,6 @@
 									StoxAssist
 								</h2>
 							</div>
-							<div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
-								<a href="product.html" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-									Shop Now
-								</a>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -125,7 +120,16 @@
 									<?php echo $list['name'] ?>
 								</a>
 								<span class="stext-105 cl3">
-								$<?php echo $list['price'] ?>
+								₹<?php echo $list['price'] ?>
+								<?php
+								$pid=$list['id'];
+								$sql=mysqli_query($con,"select qty from product where id='$pid'");
+								$row=mysqli_fetch_assoc($sql);
+								$q=$row['qty'];
+								?>
+								</span>
+								<span style="padding-top:15px;">
+									<?php if($q<5){ ?> <p class="sell">Selling Out Fast!</p> <?php } ?>
 								</span>
 							</div>
 						</div>
@@ -146,5 +150,15 @@ a.disabled {
 
 img.disp {
 	object-fit:contain;
+}
+
+.sell {
+  text-indent: 5px;
+  text-align: justify;
+  letter-spacing: 3px;
+
+  background-color: black;
+  color:white;
+  margin-right:10px;
 }
 </style>

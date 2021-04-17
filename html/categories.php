@@ -42,7 +42,7 @@
 									<?php echo $list['name'] ?>
 								</a>
 								<span class="stext-105 cl3">
-								$<?php echo $list['price'] ?>
+								₹<?php echo $list['price'] ?>
 								</span>
 							</div>
 						</div>

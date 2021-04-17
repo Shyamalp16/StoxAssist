@@ -47,8 +47,10 @@
 		$added_on=date('Y-m-d h:i:s');
 		
 		$txnid = substr(hash('sha256', mt_rand() . microtime()), 0, 20);
+
 		mysqli_query($con,"insert into orders(user_id,address,city,pincode,payment_type,payment_status,order_status,added_on,total_price,txnid) values('$user_id','$address','$city','$pincode','$payment_type','$payment_status','$order_status','$added_on','$total_price','$txnid')");
-		
+		mysqli_query($con,"update product set qty = qty - '$qty'");
+
 		$order_id=mysqli_insert_id($con);
 		
 		foreach($_SESSION['cart'] as $key=>$val){
@@ -228,7 +230,7 @@
 
 							<div class="size-290">
 								&nbsp; &nbsp; <strong><?php echo $pname?></strong><br>
-								&nbsp; &nbsp; $<?php echo $pprice*$qty?>
+								&nbsp; &nbsp; ₹<?php echo $pprice*$qty?>
 							</div>
 						</div>
 						<?php }
@@ -243,7 +245,7 @@
 
 							<div class="size-209">
 								<span class="mtext-110 cl2">
-									$<?php echo $subtotal?>
+								₹<?php echo $subtotal?>
 								</span>
 							</div>
 						</div>
@@ -271,7 +273,7 @@
 
 							<div class="size-209 p-t-1">
 								<span class="mtext-110 cl2">
-								$<?php echo $subtotal + $shipping?>
+								₹<?php echo $subtotal + $shipping?>
 								</span>
 							</div>
 						</div>

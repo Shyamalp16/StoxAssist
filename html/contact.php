@@ -5,7 +5,7 @@
 		<title> Categories </title>
 	</head>
 <!-- Title page -->
-	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('images/bg-01.jpg');">
+	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('images/stock/3.jpg');">
 		<h2 class="ltext-105 cl0 txt-center">
 			Contact
 		</h2>
@@ -56,7 +56,7 @@
 							</span>
 
 							<p class="stext-115 cl6 size-213 p-t-18">
-								ADDRESS
+								Ahmedabad, Gujarat, India.
 							</p>
 						</div>
 					</div>
@@ -72,7 +72,7 @@
 							</span>
 
 							<p class="stext-115 cl1 size-213 p-t-18">
-								PHONE NO
+								+91-999999999
 							</p>
 						</div>
 					</div>
@@ -88,7 +88,7 @@
 							</span>
 
 							<p class="stext-115 cl1 size-213 p-t-18">
-								EMAIL
+								tempmail@gmail.com
 							</p>
 						</div>
 					</div>

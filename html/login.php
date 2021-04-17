@@ -34,7 +34,7 @@
                       <input type="checkbox" checked="checked"/>
                       <div class="control__indicator"></div>
                     </label>
-                    <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span> 
+                    <span class="ml-auto"><a href="forgot.php" class="forgot-pass">Forgot Password</a></span> 
                   </div>
                   <input type="button" onclick="user_login()" value="Log In" class="btn btn-pill text-white btn-block btn-primary">
                   <span class="d-block text-center my-4 text-muted"> or Register <a href="register.php">Here</a></span>

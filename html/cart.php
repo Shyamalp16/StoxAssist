@@ -52,7 +52,7 @@
 										</div>
 									</td>
 									<td class="column-2"><?php echo $pname?></td>
-									<td class="column-3">$<?php echo $pprice?></td>
+									<td class="column-3">₹<?php echo $pprice?></td>
                                     <td class="column-4">
                                         <div class="wrap-num-product flex-w m-l-auto m-r-0">
                                             <input class="txt-center" type="text" name="num-product1" id="<?php echo $key?>qty" value="<?php echo $qty?>" onblur="manageCart('<?php echo $key?>','update')" >
@@ -106,7 +106,7 @@
 							<div class="size-209">
 								<span class="mtext-110 cl2">
 									<?php if(isset($_SESSION['cart'])){ ?>
-										$<?php echo $cart_total?>
+										₹<?php echo $cart_total?>
 									<?php }else{ ?>
 										<?php echo "Cart Empty"?>
 										<?php } ?>

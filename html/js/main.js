@@ -380,7 +380,11 @@ function manageCart(pid,type){
                 if(type=='update' || type=='delete'){
                     window.location.reload();    
                 }
-                window.location.reload();  
+                if(result=='Unavailable'){
+                    alert('Requested Amount Of Items Not Available');
+                }else{
+                    window.location.reload();  
+                }
             }
         });
 }

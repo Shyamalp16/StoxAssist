@@ -87,13 +87,26 @@
 						</h4>
 
 						<span class="mtext-106 cl2">
-						$<?php echo $get_product['0']['price']?>
+						₹<?php echo $get_product['0']['price']?>
 						</span>
 
 						<p class="stext-102 cl3 p-t-23">
 							<!-- Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat. -->
 							<?php echo $get_product['0']['description']?>
 						</p>
+
+						<?php 
+							$sql=mysqli_query($con,"select qty from product where id='$product_id'");
+							$row=mysqli_fetch_assoc($sql);
+							$q=$row['qty'];
+							if($q==0){ 
+							?>
+							<h2 style="padding-top:20px;"> OUT OF STOCK </h2>
+							<?php
+							}else{
+
+							}
+						?>
 						
 						<!-- <div class="p-t-33">
 							<div class="flex-w flex-r-m p-b-10">
@@ -133,24 +146,18 @@
 									</div>
 								</div> 
 							</div> -->
+							<br>
 
-							<div class="flex-w flex-r-m p-b-10">
+							<div class="flex-w flex-r-m p-b-10" style="display:flex; flex-direction:column;">
 								<div class="size-204 flex-w flex-m respon6-next">
-									<span>Quantity:</span>&nbsp;&nbsp;<div class="wrap-num-product flex-w m-r-20 m-tb-10">
-										<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-											<i class="fs-16 zmdi zmdi-minus"></i>
-										</div>
-
-										<input id="qty" class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" max="10" value="1">
-
-										<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-											<i class="fs-16 zmdi zmdi-plus"></i>
-										</div>
+									<span>Quantity:</span>&nbsp;&nbsp;
+									<div>
+										<input type="number" id="qty" class="form-control" name="num-product" min="1" max="<?php echo $q ?>" value="1" <?php if($q<=0){ echo "disabled"; } ?> />
 									</div>
-									<br/>
-									<br/>
-
-									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" href="javascript:void(0)" onclick="manageCart('<?php echo $get_product['0']['id'] ?>','add')">
+								</div>
+								<br>
+								<div class="size-204 flex-w flex-m respon6-next">
+									<button <?php if($q<=0){ echo "disabled"; } ?> class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" href="javascript:void(0)" onclick="manageCart('<?php echo $get_product['0']['id'] ?>','add')">
 										Add to cart
 									</button>
 								</div>
@@ -217,21 +224,11 @@
 
 										<li class="flex-w flex-t p-b-7">
 											<span class="stext-102 cl3 size-205">
-												Materials
-											</span>
-
-											<span class="stext-102 cl6 size-206">
-												60% cotton
-											</span>
-										</li>
-
-										<li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
 												Color
 											</span>
 
 											<span class="stext-102 cl6 size-206">
-												Black, Blue, Grey, Green, Red, White
+												Black, Blue
 											</span>
 										</li>
 
@@ -241,7 +238,7 @@
 											</span>
 
 											<span class="stext-102 cl6 size-206">
-												XL, L, M, S
+												Refer to Dimensions Above 
 											</span>
 										</li>
 									</ul>
@@ -257,13 +254,13 @@
 										<!-- Review -->
 										<div class="flex-w flex-t p-b-68">
 											<div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-												<img src="images/avatar-01.jpg" alt="AVATAR">
+												<img src="images/icons/usericon.png" alt="AVATAR">
 											</div>
 
 											<div class="size-207">
 												<div class="flex-w flex-sb-m p-b-17">
 													<span class="mtext-107 cl2 p-r-20">
-														Ariana Grande
+														Shyamal Patel
 													</span>
 
 													<span class="fs-18 cl11">
@@ -276,7 +273,7 @@
 												</div>
 
 												<p class="stext-102 cl6">
-													Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
+													Nice Product
 												</p>
 											</div>
 										</div>

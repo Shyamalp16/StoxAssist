@@ -77,25 +77,7 @@
 		<!-- Header desktop -->
 		<div class="container-menu-desktop">
 			<!-- Topbar -->
-			<div class="top-bar">
-				<div class="content-topbar flex-sb-m h-full container">
-					<div class="left-top-bar">
-				</div>
-					<div class="right-top-bar flex-w h-full">
-						<!-- <a href="#" class="flex-c-m trans-04 p-lr-25">
-							My Account
-						</a> -->
-						<?php if(isset($_SESSION['USER_LOGIN'])){ 
-							echo '<a href="#" class="flex-c-m trans-04 p-lr-25">My Account</a>';
-							echo '<a href="my_orders.php" class="flex-c-m trans-04 p-lr-25">My Orders</a>';
-							echo '<a href="logout_submit.php" class="flex-c-m trans-04 p-lr-25">Logout</a>';
-						}else{ 
-							echo '<a href="login.php" class="flex-c-m trans-04 p-lr-25">Login</a>';
-						}
-						?>
-					</div>
-				</div>
-			</div>
+
 
 			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop container">
@@ -109,7 +91,7 @@
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu">
-							<li class="active-menu">
+							<li class="<?php if($current_page=='index.php'){echo "active-menu"; } ?>">
 								<a href="index.php">Home</a>
 							</li>
                             <li>
@@ -128,7 +110,7 @@
 								<a href="cart.php">Features</a>
 							</li> -->
 
-							<li>
+							<li class="<?php if($current_page=='contact.php'){echo "active-menu"; } ?>">
 								<a href="contact.php">Contact</a>
 							</li>
 						</ul>
@@ -139,20 +121,39 @@
 						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
 							<i class="zmdi zmdi-search"></i>
 						</div>
-
 						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="<?php echo $total?>">
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
+
+						<?php if(isset($_SESSION['USER_LOGIN'])){ 
+							echo '<div class="dropdown show">';
+								echo '<a class="btn dropdown-toggle atag" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+								echo 'My Account';
+								echo '</a>';
+
+								echo '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">';
+									echo '<a class="dropdown-item atag" href="my_orders.php">My Orders</a>';
+									echo '<a class="dropdown-item atag" href="profile.php">Profile</a>';
+									echo '<a class="dropdown-item atag" href="logout_submit.php">Logout</a>';
+								echo '</div>';
+							echo '</div>';
+							}else{
+								echo '<a href="login.php" class="atag flex-c-m trans-04 p-lr-25">Login</a>';
+								echo '</div>';
+						 } ?>
 					</div>
 				</nav>
 			</div>	
 		</div>
 
+
+
+
 		<!-- Header Mobile -->
 		<div class="wrap-header-mobile">
 			<!-- Logo moblie -->		
 			<div class="logo-mobile">
-				<a href="index.php"><img src="images/icons/logo-01.png" alt="IMG-LOGO"></a>
+				<a href="index.php"><img src="images/icons/Screenshot-.png" alt="IMG-LOGO"></a>
 			</div>
 
 			<!-- Icon header --> 
@@ -179,27 +180,17 @@
 		<div class="menu-mobile">
 			<ul class="topbar-mobile">
 				<li>
-					<div class="right-top-bar flex-w h-full">
+					<!-- <div class="right-top-bar flex-w h-full">
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
 							My Account
 						</a>
-					</div>
+					</div> -->
 				</li>
 			</ul>
 
 			<ul class="main-menu-m">
 				<li>
 					<a href="index.php">Home</a>
-					<ul class="sub-menu-m">
-						<li><a href="index.php">Homepage 1</a></li>
-					</ul>
-					<span class="arrow-main-menu-m">
-						<i class="fa fa-angle-right" aria-hidden="true"></i>
-					</span>
-				</li>
-
-				<li>
-					<a href="product.html">Shop</a>
 				</li>
 
                 <li>
@@ -215,15 +206,27 @@
 					<span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
 					</span>
+				</li> 
+
+				<li>
+					<a href="contact.php">Contact Us</a>
 				</li>
 
 				<li>
-					<a href="cart.php" class="label1 rs1" data-label1="hot">Features</a>
-				</li>   
-
-				<li>
-					<a href="contact.html">Contact Us</a>
-				</li>
+				<?php if(isset($_SESSION['USER_LOGIN'])){ 
+					echo '<a href="#">My Account</a>
+					<ul class="sub-menu-m">
+						<li><a href="my_orders.php">My Orders</a></li>
+						<li><a href="profile.php">Profile</a></li>
+						<li><a href="logout_submit.php">Logout</a></li>
+					</ul>
+					<span class="arrow-main-menu-m">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+					</span>';
+					}else{
+						echo '<a href="login.php">Login</a>';
+					} ?>
+				</li>						
 			</ul>
 		</div>
 
@@ -278,7 +281,7 @@
 									<?php echo $pname?>
 								</a>
 								<span class="header-cart-item-info">
-								<?php echo $qty?> x $<?php echo $pprice?>
+								<?php echo $qty?> x ₹<?php echo $pprice?>
 								</span>
 							</div>
 						</li>
@@ -286,7 +289,7 @@
 					<?php } ?>
 				<div class="w-full">
 					<div class="header-cart-total w-full p-tb-40">
-						Total: $<?php echo $cart_total?> (<?php echo $total?> Items) <br>
+						Total: ₹<?php echo $cart_total?> (<?php echo $total?> Items) <br>
 						<!-- Total: <?php echo $total?> Items <br> -->
 					</div>
 					<?php }else{ 
@@ -312,3 +315,11 @@
 			</div>
 		</div>
 	</div>
+	<br>
+	<br><br>
+
+	<style>
+		.atag {
+			color:inherit;
+		}
+	</style>

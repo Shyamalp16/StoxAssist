@@ -13,5 +13,13 @@
             echo 'invalid';
         }
     }
+
+    if($type=='forgot'){    
+        if($otp==$_SESSION['forgot_pw']){
+            echo 'success';
+        }else{
+            echo 'invalid';
+        }
+    }
     
 ?>
