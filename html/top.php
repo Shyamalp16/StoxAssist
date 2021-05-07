@@ -1,60 +1,65 @@
 <?php
-    require('connection.inc.php');
-	require('functions.inc.php');
-	require('add_tocart.inc.php');
-    $cat = mysqli_query($con,"select * from categories where status=1 order by categories asc");
-    $cat_arr = array();
-    while($row=mysqli_fetch_assoc($cat)){
-        $cat_arr[] = $row;
-    }
+require('connection.inc.php');
+require('functions.inc.php');
+require('add_tocart.inc.php');
+$cat = mysqli_query($con, "select * from categories where status=1 order by categories asc");
+$cat_arr = array();
+while ($row = mysqli_fetch_assoc($cat)) {
+	$cat_arr[] = $row;
+}
 
-	$ob = new add_tocart();
-	$total=$ob->total();
+$ob = new add_tocart();
+$total = $ob->total();
 
-	$page=$_SERVER['SCRIPT_NAME'];
-	$page_arr=explode('/',$page);
-	$current_page=$page_arr[count($page_arr)-1];
-	$meta_title="StoxAssist";
+$page = $_SERVER['SCRIPT_NAME'];
+$page_arr = explode('/', $page);
+$current_page = $page_arr[count($page_arr) - 1];
+$meta_title = "StoxAssist";
 
-	if($current_page=='product-detail.php'){
-		$product=get_safe_value($con,$_GET['id']);
-		$meta=mysqli_fetch_assoc(mysqli_query($con,"select * from product where id='$product'"));
-		$meta_title=$meta['meta_title'];
-		$meta_desc=$meta['meta_desc'];
-		$meta_key=$meta['meta_keyword'];
-	}	
+if ($current_page == 'product-detail.php') {
+	$product = get_safe_value($con, $_GET['id']);
+	$sql = mysqli_query($con, "select * from product where id='$product'");
+	$meta = mysqli_fetch_assoc($sql);
+	$rows = mysqli_num_rows($sql);
+	if($row > 0){
+	$meta_title = $meta['meta_title'];
+	$meta_desc = $meta['meta_desc'];
+	$meta_key = $meta['meta_keyword'];
+	}
+}
 
-	if($current_page=='categories.php'){
-		$meta_title="Categories";
-	}
-	if($current_page=='categories.php'){
-		$meta_title="Categories";
-	}
-	if($current_page=='my_orders.php'){
-		$meta_title="Your Orders";
-	}
-	if($current_page=='order_details.php'){
-		$meta_title="Order Details";
-	}
-	if($current_page=='cart.php'){
-		$meta_title="Your Cart";
-	}
-	if($current_page=='checkout.php'){
-		$meta_title="Checkout";
-	}
-	if($current_page=='thank_you.php'){
-		$meta_title="Order Placed";
-	}
+if ($current_page == 'categories.php') {
+	$meta_title = "Categories";
+}
+if ($current_page == 'categories.php') {
+	$meta_title = "Categories";
+}
+if ($current_page == 'my_orders.php') {
+	$meta_title = "Your Orders";
+}
+if ($current_page == 'order_details.php') {
+	$meta_title = "Order Details";
+}
+if ($current_page == 'cart.php') {
+	$meta_title = "Your Cart";
+}
+if ($current_page == 'checkout1.php') {
+	$meta_title = "Checkout";
+}
+if ($current_page == 'thank_you.php') {
+	$meta_title = "Order Placed";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<title><?php echo $meta_title ?></title>
 	<meta charset="UTF-8">
-	<meta name="description" content="<?php echo $meta_desc?>">
-	<meta name="keyword" content="<?php echo $meta_key?>">
+	<meta name="description" content="<?php echo $meta_desc ?>">
+	<meta name="keyword" content="<?php echo $meta_key ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+	<link rel="icon" type="image/png" href="images/icons/favicon.png" />
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
@@ -69,9 +74,11 @@
 	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/profile.css">
 </head>
+
 <body class="animsition">
-	
+
 	<!-- Header -->
 	<header>
 		<!-- Header desktop -->
@@ -81,8 +88,8 @@
 
 			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop container">
-					
-					<!-- Logo desktop -->		
+
+					<!-- Logo desktop -->
 					<a href="index.php" class="logo">
 						<img src="images/icons/Screenshot-.png" alt="IMG-LOGO">
 						<!-- <img src="images/icons/logo-01.png" alt="IMG-LOGO"> -->
@@ -91,18 +98,20 @@
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu">
-							<li class="<?php if($current_page=='index.php'){echo "active-menu"; } ?>">
+							<li class="<?php if ($current_page == 'index.php') {
+											echo "active-menu";
+										} ?>">
 								<a href="index.php">Home</a>
 							</li>
-                            <li>
+							<li>
 								<a href="#">Categories</a>
 								<ul class="sub-menu">
-                                    <?php
-                                    foreach($cat_arr as $list){
-                                    ?>
-                                        <li><a href="categories.php?id=<?php echo $list['id']?>"><?php echo $list['categories']?></a></li>
-                                    <?php }
-                                    ?>
+									<?php
+									foreach ($cat_arr as $list) {
+									?>
+										<li><a href="categories.php?id=<?php echo $list['id'] ?>"><?php echo $list['categories'] ?></a></li>
+									<?php }
+									?>
 								</ul>
 							</li>
 
@@ -110,40 +119,42 @@
 								<a href="cart.php">Features</a>
 							</li> -->
 
-							<li class="<?php if($current_page=='contact.php'){echo "active-menu"; } ?>">
+							<li class="<?php if ($current_page == 'contact.php') {
+											echo "active-menu";
+										} ?>">
 								<a href="contact.php">Contact</a>
 							</li>
 						</ul>
-					</div>	
+					</div>
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
 						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
 							<i class="zmdi zmdi-search"></i>
 						</div>
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="<?php echo $total?>">
+						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="<?php echo $total ?>">
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
 
-						<?php if(isset($_SESSION['USER_LOGIN'])){ 
+						<?php if (isset($_SESSION['USER_LOGIN'])) {
 							echo '<div class="dropdown show">';
-								echo '<a class="btn dropdown-toggle atag" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-								echo 'My Account';
-								echo '</a>';
+							echo '<a class="btn dropdown-toggle atag" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+							echo 'My Account';
+							echo '</a>';
 
-								echo '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">';
-									echo '<a class="dropdown-item atag" href="my_orders.php">My Orders</a>';
-									echo '<a class="dropdown-item atag" href="profile.php">Profile</a>';
-									echo '<a class="dropdown-item atag" href="logout_submit.php">Logout</a>';
-								echo '</div>';
+							echo '<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">';
+							echo '<a class="dropdown-item atag" href="my_orders.php">My Orders</a>';
+							echo '<a class="dropdown-item atag" href="profile.php">Profile</a>';
+							echo '<a class="dropdown-item atag" href="logout_submit.php">Logout</a>';
 							echo '</div>';
-							}else{
-								echo '<a href="login.php" class="atag flex-c-m trans-04 p-lr-25">Login</a>';
-								echo '</div>';
-						 } ?>
+							echo '</div>';
+						} else {
+							echo '<a href="login.php" class="atag flex-c-m trans-04 p-lr-25">Login</a>';
+							echo '</div>';
+						} ?>
 					</div>
 				</nav>
-			</div>	
+			</div>
 		</div>
 
 
@@ -151,18 +162,18 @@
 
 		<!-- Header Mobile -->
 		<div class="wrap-header-mobile">
-			<!-- Logo moblie -->		
+			<!-- Logo moblie -->
 			<div class="logo-mobile">
 				<a href="index.php"><img src="images/icons/Screenshot-.png" alt="IMG-LOGO"></a>
 			</div>
 
-			<!-- Icon header --> 
+			<!-- Icon header -->
 			<div class="wrap-icon-header flex-w flex-r-m m-r-15">
 				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
 					<i class="zmdi zmdi-search"></i>
 				</div>
 
-				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="<?php echo $total?>">
+				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="<?php echo $total ?>">
 					<i class="zmdi zmdi-shopping-cart"></i>
 				</div>
 			</div>
@@ -193,28 +204,28 @@
 					<a href="index.php">Home</a>
 				</li>
 
-                <li>
+				<li>
 					<a href="#">Categories</a>
 					<ul class="sub-menu-m">
-                        <?php
-                            foreach($cat_arr as $list){
-                        ?>
-                        <li><a href="categpries.php?id=<?php echo $list['id']?>"><?php echo $list['categories']?></a></li>
-                        <?php }
-                        ?>
+						<?php
+						foreach ($cat_arr as $list) {
+						?>
+							<li><a href="categpries.php?id=<?php echo $list['id'] ?>"><?php echo $list['categories'] ?></a></li>
+						<?php }
+						?>
 					</ul>
 					<span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
 					</span>
-				</li> 
+				</li>
 
 				<li>
 					<a href="contact.php">Contact Us</a>
 				</li>
 
 				<li>
-				<?php if(isset($_SESSION['USER_LOGIN'])){ 
-					echo '<a href="#">My Account</a>
+					<?php if (isset($_SESSION['USER_LOGIN'])) {
+						echo '<a href="#">My Account</a>
 					<ul class="sub-menu-m">
 						<li><a href="my_orders.php">My Orders</a></li>
 						<li><a href="profile.php">Profile</a></li>
@@ -223,10 +234,10 @@
 					<span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>
 					</span>';
-					}else{
+					} else {
 						echo '<a href="login.php">Login</a>';
 					} ?>
-				</li>						
+				</li>
 			</ul>
 		</div>
 
@@ -247,8 +258,8 @@
 		</div>
 	</header>
 
-		<!-- Cart -->
-		<div class="wrap-header-cart js-panel-cart">
+	<!-- Cart -->
+	<div class="wrap-header-cart js-panel-cart">
 		<div class="s-full js-hide-cart"></div>
 		<div class="header-cart flex-col-l p-l-65 p-r-25">
 			<div class="header-cart-title flex-w flex-sb-m p-b-8">
@@ -260,58 +271,58 @@
 				</div>
 			</div>
 			<div class="header-cart-content flex-w js-pscroll">
-			<?php
-			if(isset($_SESSION['cart'])) { 
-					$cart_total=0;
-					foreach($_SESSION['cart'] as $key=>$val){
-					$productArr = get_product($con,'','',$key);
-					$pname=$productArr[0]['name'];
-					$pprice=$productArr[0]['price'];
-					$pimage=$productArr[0]['image'];
-					$qty=$val['qty'];
-					$cart_total=$cart_total+($pprice*$qty);
-					?>
-					<ul class="header-cart-wrapitem w-full">
-						<li class="header-cart-item flex-w flex-t m-b-12">
-							<div class="header-cart-item-img">
-								<img src="<?php echo PRODUCT_IMAGE_SITE_PATH.$pimage?>" alt="IMG">
-							</div>
-							<div class="header-cart-item-txt p-t-8">
-								<a href="product-detail.php?id=<?php echo $key?>" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
-									<?php echo $pname?>
-								</a>
-								<span class="header-cart-item-info">
-								<?php echo $qty?> x ₹<?php echo $pprice?>
-								</span>
-							</div>
-						</li>
-					</ul>
+				<?php
+				if (isset($_SESSION['cart'])) {
+					$cart_total = 0;
+					foreach ($_SESSION['cart'] as $key => $val) {
+						$productArr = get_product($con, '', '', $key);
+						$pname = $productArr[0]['name'];
+						$pprice = $productArr[0]['price'];
+						$pimage = $productArr[0]['image'];
+						$qty = $val['qty'];
+						$cart_total = $cart_total + ($pprice * $qty);
+				?>
+						<ul class="header-cart-wrapitem w-full">
+							<li class="header-cart-item flex-w flex-t m-b-12">
+								<div class="header-cart-item-img">
+									<img src="<?php echo PRODUCT_IMAGE_SITE_PATH . $pimage ?>" alt="IMG">
+								</div>
+								<div class="header-cart-item-txt p-t-8">
+									<a href="product-detail.php?id=<?php echo $key ?>" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+										<?php echo $pname ?>
+									</a>
+									<span class="header-cart-item-info">
+										<?php echo $qty ?> x ₹<?php echo $pprice ?>
+									</span>
+								</div>
+							</li>
+						</ul>
 					<?php } ?>
-				<div class="w-full">
-					<div class="header-cart-total w-full p-tb-40">
-						Total: ₹<?php echo $cart_total?> (<?php echo $total?> Items) <br>
-						<!-- Total: <?php echo $total?> Items <br> -->
-					</div>
-					<?php }else{ 
-						echo "Cart Empty"; 
-					} ?>
-					<?php if(isset($_SESSION['USER_LOGIN'])){ ?>
-					<div class="header-cart-buttons flex-w w-full">
-						<a href="cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-							View Cart
-						</a>
-						<a href="checkout.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-							Check Out
-						</a>
-					</div>
-					<?php }else{ ?>
+					<div class="w-full">
+						<div class="header-cart-total w-full p-tb-40">
+							Total: ₹<?php echo $cart_total ?> (<?php echo $total ?> Items) <br>
+							<!-- Total: <?php echo $total ?> Items <br> -->
+						</div>
+					<?php } else {
+					echo "Cart Empty";
+				} ?>
+					<?php if (isset($_SESSION['USER_LOGIN'])) { ?>
+						<div class="header-cart-buttons flex-w w-full">
+							<a href="cart.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+								View Cart
+							</a>
+							<a href="checkout1.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+								Check Out
+							</a>
+						</div>
+					<?php } else { ?>
 						<div class="header-cart-buttons flex-w w-full">
 							<a href="login.php" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
 								Login
 							</a>
 						</div>
 					<?php } ?>
-				</div>
+					</div>
 			</div>
 		</div>
 	</div>
@@ -320,6 +331,6 @@
 
 	<style>
 		.atag {
-			color:inherit;
+			color: inherit;
 		}
 	</style>

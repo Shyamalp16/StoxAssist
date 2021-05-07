@@ -1,16 +1,26 @@
 <?php
 	require('top.php');
-	$product_id=mysqli_real_escape_string($con,$_GET['id']);
-	if($product_id>0){
-		$get_product=get_product($con,'','',$product_id);
+	if(isset($_GET['id'])){
+		$product_id=mysqli_real_escape_string($con,$_GET['id']);
+		$product_id = preg_replace("/[^0-9]/", "", $product_id );
+		echo $product_id;
+		if($product_id>0){
+			$get_product=get_product($con,'','',$product_id);
+		}else{
+			?>
+			<script>
+			window.location.href='index.php';
+			</script>
+			<?php
+		}
 	}else{
 		?>
 		<script>
-			window.location.href='index.php';
+		window.location.href='index.php';
 		</script>
-	<?php
+		<?php
 	}
-?>
+	?>
 
 	<!-- breadcrumb -->
 	<?php if(count($get_product)>0){ ?>
@@ -156,9 +166,12 @@
 									</div>
 								</div>
 								<br>
-								<div class="size-204 flex-w flex-m respon6-next">
-									<button <?php if($q<=0){ echo "disabled"; } ?> class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" href="javascript:void(0)" onclick="manageCart('<?php echo $get_product['0']['id'] ?>','add')">
+								<div class="size-204 flex-w flex-m respon6-next" style="display:flex; flex-wrap:nowrap;">
+									<button <?php if($q<=0){ echo "disabled"; } ?> class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" href="javascript:void(0)" onclick="manageCart('<?php echo $get_product['0']['id'] ?>','add','no')">
 										Add to cart
+									</button>
+									<button <?php if($q<=0){ echo "disabled"; } ?> class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 " href="javascript:void(0)" onclick="manageCart('<?php echo $get_product['0']['id'] ?>','add','yes')">
+										Buy Now
 									</button>
 								</div>
 							</div>	

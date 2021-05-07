@@ -1,14 +1,24 @@
 <?php
     require('top.php');
-	$cat_id=mysqli_real_escape_string($con,$_GET['id']);
-	if($cat_id>0){
-		$get_product=get_product($con,'',$cat_id,'');
+	if(isset($_GET['id'])){
+		$cat_id=mysqli_real_escape_string($con,$_GET['id']);
+		$cat_id = preg_replace("/[^0-9]/", "", $cat_id );
+		echo $cat_id;
+		if($cat_id>0){
+			$get_product=get_product($con,'',$cat_id,'');
+		}else{
+			?>
+			<script>
+			window.location.href='index.php';
+			</script>
+			<?php
+		}
 	}else{
-	?> 
-	<script>
+		?>
+		<script>
 		window.location.href='index.php';
-	</script>
-	<?php
+		</script>
+		<?php
 	}
 ?>
 	<br>

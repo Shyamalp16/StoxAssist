@@ -1,5 +1,6 @@
 <?php
     require('top.php');
+	// prx($_SESSION['cart']);
 ?>
     <br>
     <br>
@@ -74,19 +75,7 @@
 							Continue Shopping
 						</a>
 
-						<!-- <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-							<div class="flex-w flex-m m-r-20 m-tb-5">
-								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
-									
-								<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-									Apply coupon
-								</div>
-							</div>
 
-							<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-								Update Cart
-							</div>
-						</div> -->
 					</div>
 				</div>
 
@@ -111,8 +100,10 @@
 										<?php echo "Cart Empty"?>
 										<?php } ?>
 								</span>
-							</div>
+							</div>							
 						</div>
+
+
 
 						<div class="flex-w flex-t bor12 p-t-15 p-b-30">
 							<!-- <div class="size-208 w-full-ssm">
@@ -143,7 +134,7 @@
 						</div>
 
 						<?php if(isset($_SESSION['USER_LOGIN'])){ ?>
-						<a href="checkout.php" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+						<a href="checkout1.php" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
 							Proceed to Checkout
 						</a>
 						<?php }else{ ?>

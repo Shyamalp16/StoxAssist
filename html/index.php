@@ -1,5 +1,6 @@
 <?php
     require('top.php');
+	// prx($_SESSION['cart']);
 ?>
 	<!-- Slider -->
 	<section class="section-slide">

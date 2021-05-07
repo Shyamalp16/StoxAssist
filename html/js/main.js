@@ -368,7 +368,7 @@ function user_login(){
     }
 }
 
-function manageCart(pid,type){
+function manageCart(pid,type,is_checkout){
     if(type=='update'){
         var qty=jQuery("#"+pid+"qty").val();    
     }else{
@@ -385,8 +385,68 @@ function manageCart(pid,type){
                 if(result=='Unavailable'){
                     alert('Requested Amount Of Items Not Available');
                 }else{
-                    window.location.reload();  
+                    if(is_checkout=='yes'){
+                        window.location.href = 'checkout.php';
+                    }
+                    
                 }
+                window.location.reload();  
             }
         });
+}
+
+
+function change_password(){
+    let pw1 = document.getElementById('password1').value;
+    let pw2 = document.getElementById('password2').value;
+    let email = document.getElementById('email').value;
+
+    if(pw1 === pw2){
+        if(pw1.length < 8){
+            jQuery('.msg').html("Password must be at least 8 characters");
+        }else{
+            jQuery.ajax({
+                url:'changePw.php',
+                type:'post',
+                data:'password='+pw1+'&email='+email,
+                success:function(result){
+                    if(result=='done'){
+                        jQuery('.msg').html("Password Has Been Modified");
+                    }else{
+                        jQuery('.msg').html("Technical Error, Please Try Again");
+                    }
+                }
+            })
+            jQuery('.msg').html("");
+        }
+    }else{
+        jQuery('.msg').html("Two Passwords Dont Match");
+    }
+}
+
+function coupon(){
+    let code = document.getElementById('coup').value;
+    if(code != ''){
+       jQuery.ajax({
+        url:'coupon.php',
+        type:'post',
+        data:'code='+code,
+        success:function(result){
+            let data=jQuery.parseJSON(result);
+            if(data.is_error=='yes'){
+                jQuery('.couponBOX').hide();
+                jQuery('.total').html("₹ "+data.card_total);
+                jQuery('.msg').html(data.result);
+            }if(data.is_error=='no'){
+                jQuery('.couponBOX').show();
+                jQuery('.msg').html('');
+                jQuery('.discountPrice').html("₹ "+data.result1);
+                jQuery('.total').html("₹ "+data.result);
+            }
+        }
+       });
+    }else{
+        jQuery('.msg').html("ENTER COUPON CODE");
+    }
+
 }

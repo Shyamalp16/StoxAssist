@@ -11,13 +11,14 @@
     $row=mysqli_fetch_assoc($sql);
     $q=$row['qty'];
 
-    if($qty>$q){
-        echo "Unavailable";
-        die();
-    }
-
+   
+if($qty >= 1){
     $ob = new add_tocart();
     if($type=='add'){
+        if($qty>$q){
+            echo "Unavailable";
+            die();
+        }
         $ob->addProduct($pid,$qty);
     }
 
@@ -26,9 +27,15 @@
     }
 
     if($type=='update'){
+        if($qty>$q){
+            echo "Unavailable";
+            die();
+        }
         $ob->updateProduct($pid,$qty);
     }
-
+}else{
+    echo "Quantity";
+}
 
     echo $ob->total();
 ?>
