@@ -1,7 +1,7 @@
 <?php
     require('connection.inc.php');
     require('functions.inc.php');
-    include('smtp/PHPMailerAutoload.php');
+    // include('smtp/PHPMailerAutoload.php');
 
     $type=get_safe_value($con,$_POST['type']);
     $otp=get_safe_value($con,$_POST['otp']);

@@ -1,7 +1,7 @@
 <?php
     require('connection.inc.php');
     require('functions.inc.php');
-    include('smtp/PHPMailerAutoload.php');
+    // include('smtp/PHPMailerAutoload.php');
 
     $type=get_safe_value($con,$_POST['type']);
 
@@ -18,7 +18,7 @@
         $mail->SMTPSecure="tls";
         $mail->SMTPAuth=true;
         $mail->Username="patelshyamal016@gmail.com";
-        $mail->Password="shyamalp16";
+        $mail->Password="HtmlcsgoD";
         $mail->SetFrom("patelshyamal016@gmail.com");
         $mail->addAddress("$email");
         $mail->IsHTML(true);
@@ -48,7 +48,7 @@
         $mail->SMTPSecure="tls";
         $mail->SMTPAuth=true;
         $mail->Username="patelshyamal016@gmail.com";
-        $mail->Password="shyamalp16";
+        $mail->Password="HtmlcsgoD";
         $mail->SetFrom("patelshyamal016@gmail.com");
         $mail->addAddress("$email");
         $mail->IsHTML(true);
@@ -83,7 +83,7 @@
         $mail->SMTPSecure="tls";
         $mail->SMTPAuth=true;
         $mail->Username="patelshyamal016@gmail.com";
-        $mail->Password="shyamalp16";
+        $mail->Password="HtmlcsgoD";
         $mail->SetFrom("patelshyamal016@gmail.com");
         $mail->addAddress("$email");
         $mail->IsHTML(true);

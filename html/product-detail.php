@@ -170,9 +170,9 @@
 									<button <?php if($q<=0){ echo "disabled"; } ?> class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" href="javascript:void(0)" onclick="manageCart('<?php echo $get_product['0']['id'] ?>','add','no')">
 										Add to cart
 									</button>
-									<button <?php if($q<=0){ echo "disabled"; } ?> class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 " href="javascript:void(0)" onclick="manageCart('<?php echo $get_product['0']['id'] ?>','add','yes')">
+									<!-- <button <?php if($q<=0){ echo "disabled"; } ?> class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 " href="javascript:void(0)" onclick="manageCart('<?php echo $get_product['0']['id'] ?>','add','yes')">
 										Buy Now
-									</button>
+									</button> -->
 								</div>
 							</div>	
 						</div>
@@ -193,9 +193,9 @@
 							<a class="nav-link" data-toggle="tab" href="#information" role="tab">Additional information</a>
 						</li>
 
-						<li class="nav-item p-b-10">
+						<!-- <li class="nav-item p-b-10">
 							<a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a>
-						</li>
+						</li> -->
 					</ul>
 
 					<!-- Tab panes -->

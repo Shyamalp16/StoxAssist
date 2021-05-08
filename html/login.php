@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/icons/favicon.png" />
     <link rel="stylesheet" href="fonts/icomoon/style.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -37,7 +38,7 @@
                     <span class="ml-auto"><a href="forgot.php" class="forgot-pass">Forgot Password</a></span> 
                   </div>
                   <input type="button" onclick="user_login()" value="Log In" class="btn btn-pill text-white btn-block btn-primary">
-                  <span class="d-block text-center my-4 text-muted msg" style="color:red;"> </span>
+                  <span class="d-block text-center my-4 text-muted msg" "> </span>
                   <span class="d-block text-center my-4 text-muted"> or Register <a href="register.php">Here</a></span>
                 </form>
                 <br>

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/icons/favicon.png" />
     <link rel="stylesheet" href="fonts/icomoon/style.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -48,6 +49,7 @@
                   </div>
                   <input type="button" onclick="user_reg()" value="Sign Up" class="btn btn-pill text-white btn-block btn-primary">
                 </form>
+                <span class="d-block text-center my-4 text-muted msg">  </span>
                 <br>
                 <div class="mb-4 reg_error" id="">
                   <p></p>
@@ -119,6 +121,11 @@
       .ver {
         display: none;
       }
+
+      .msg {
+      font-weight: 900;
+      text-decoration: underline;
+    }
     </style>
   </body>
 </html>

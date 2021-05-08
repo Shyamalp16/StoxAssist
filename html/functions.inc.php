@@ -492,7 +492,7 @@ function sendInvoice($con, $order_id){
         </style>
       <![endif]-->
       </head>
-      <body>
+      <body style="color:black;">
         <span class="preheader">This is an invoice for your purchase on '.$user_order['added_on'].'. Please submit payment by {{ due_date }}</span>
         <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation">
           <tr>
@@ -500,7 +500,7 @@ function sendInvoice($con, $order_id){
               <table class="email-content" width="100%" cellpadding="0" cellspacing="0" role="presentation">
                 <tr>
                   <td class="email-masthead">
-                    <a href="https://example.com" class="f-fallback email-masthead_name">
+                    <a href="http://localhost/StoxAssist/html/index.php" class="f-fallback email-masthead_name">
                     StoxAssist
                   </a>
                   </td>
@@ -566,7 +566,7 @@ function sendInvoice($con, $order_id){
                                     if($coupon_value != ''){
                                         $html.='
                                         <tr>
-                                            <td width="80%" class="purchase_item"><span class="f-fallback" style="color:white;">Coupon Discount</span></td>
+                                            <td width="80%" class="purchase_item"><span class="f-fallback" style="color:black;">Coupon Discount</span></td>
                                             <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">'.$coupon_value.'</span></td>
                                         </tr>';
                                     }

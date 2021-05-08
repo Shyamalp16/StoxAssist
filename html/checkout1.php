@@ -22,11 +22,13 @@ $cart_total = 0;
 if (isset($_POST['submit'])) {
 	$address = get_safe_value($con, $_POST['address']);
 	$city = get_safe_value($con, $_POST['city']);
+	$state = get_safe_value($con, $_POST['state']);
 	$pincode = get_safe_value($con, $_POST['pincode']);
+	
 	$payment_type = get_safe_value($con, $_POST['payment_type']);
 	$user_id = $_SESSION['USER_ID'];
-	// prx($_SESSION['USER_ID']);
-	// die();
+
+
 
 	foreach ($_SESSION['cart'] as $key => $val) {
 		$productArr = get_product($con, '', '', $key);
@@ -60,7 +62,7 @@ if (isset($_POST['submit'])) {
         $coupon ='';
 	}
 
-	mysqli_query($con, "insert into orders(user_id,address,city,pincode,payment_type,payment_status,order_status,added_on,total_price,txnid,coupon_id,coupon_value,coupon_code) values('$user_id','$address','$city','$pincode','$payment_type','$payment_status','$order_status','$added_on','$total_price','$txnid','$id','$coupon_value','$coupon')");
+	mysqli_query($con, "insert into orders(user_id,address,city,state,pincode,payment_type,payment_status,order_status,added_on,total_price,txnid,coupon_id,coupon_value,coupon_code) values('$user_id','$address','$city','$state','$pincode','$payment_type','$payment_status','$order_status','$added_on','$total_price','$txnid','$id','$coupon_value','$coupon')");
 	$order_id = mysqli_insert_id($con);
 
 	mysqli_query($con, "update product set qty = qty - '$qty' where id='$productID'");
@@ -74,8 +76,13 @@ if (isset($_POST['submit'])) {
 		mysqli_query($con, "insert into order_detail(order_id,product_id,qty,price) values('$order_id','$key','$qty','$price')");
 	}
 
-	if($coupon_value == ''){
+	// if($coupon_value == ''){
+	// 	unset($_SESSION['cart']);
+	// }
+
+	if ($payment_type == 'cod') {
 		unset($_SESSION['cart']);
+		sendInvoice($con, $order_id);
 	}
 
 	if ($payment_type == 'insta') {
@@ -168,29 +175,31 @@ if (isset($_POST['submit'])) {
 					</div>
 
 					<form method="post">
-						<div id="address" class="w3-container checkout">
-							<h2>Enter Address Details</h2><br>
-							<div class="bor8 m-b-20 how-pos4-parent">
-								<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30 addr" onblur="validateA();" type="text" id="address" name="address" placeholder="Street Address" required>
+						<div id="address" class="w3-container checkout appendMe"> 
+						<!-- HERE -->
+							<?php
+								$uid = $_SESSION['USER_ID'];
+								$res = mysqli_query($con, "select address,city,state,pin from users where id='$uid'");
+								$row = mysqli_fetch_assoc($res);
+							?>
+							<div class="card" id="addressCard" style="margin:35px 0px;">
+								<div class="card-header">
+									Saved Address
+								</div>
+								<div class="card-body">
+									<p class="card-text"> Address: <?php echo $row['address'] ?> </p>
+									<p class="card-text"> City: <?php echo $row['city'] ?> </p>
+									<p class="card-text"> State: <?php echo $row['state'] ?> </p>
+									<p class="card-text"> Pincode: <?php echo $row['pin'] ?> </p>
+									<input type="hidden" name="address" id="address" value="<?php echo $row['address'] ?>" />
+									<input type="hidden" name="city" id="city" value="<?php echo $row['city'] ?>" />
+									<input type="hidden" name="state" id="state" value="<?php echo $row['state'] ?>" />
+									<input type="hidden" name="pincode" id="pincode" value="<?php echo $row['pin'] ?>" />
+									<input type="button" style="margin-top:15px; cursor:pointer;" value="Select This" class="btn btn-primary">
+									<input type="button" onclick="setValue();" style="margin-top:15px; cursor:pointer;" value="Enter New Address" class="btn btn-primary">
+								</div>
 							</div>
-							<span id="errA" class="msg" style="display:none"> </span>
-
-							<div class="bor8 m-b-20 how-pos4-parent">
-								<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" onblur="validateC();" type="text" id="city" name="city" placeholder="City" required>
-							</div>
-							<span id="errC" class="msg" style="display:none"> </span>
-
-							<div class="bor8 m-b-20 how-pos4-parent">
-								<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" onblur="validateS();" type="text" id="state" name="state" placeholder="State" required>
-							</div>
-							<span id="errS" class="msg" style="display:none"> </span>
-
-							<div class="bor8 m-b-20 how-pos4-parent">
-								<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" onblur="validateP();" type="text" id="pincode" name="pincode" placeholder="Zipcode" required>
-							</div>
-							<span id="errP" class="msg" style="display:none"> </span>
 						</div>
-
 						<div id="payment" class="w3-container checkout" style="display:none">
 							<h2>Select Your Payment Method</h2><br>
 							<div class="form-check">
@@ -206,7 +215,7 @@ if (isset($_POST['submit'])) {
 								</label>
 							</div><br>
 						</div>
-						<input type="submit" onclick="validate();" href="#" name="submit" value="Place Order" class="flex-c-m stext-101 cl0 size-101 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" />
+						<input type="submit" href="#" name="submit" value="Place Order" class="flex-c-m stext-101 cl0 size-101 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer" />
 					</form>
 				</div>
 			</div><br><br>
@@ -294,7 +303,6 @@ if (isset($_POST['submit'])) {
 						</span>
 					</div>
 				</div>
-				<input type="submit" name="submit" value="Place Order" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
 			</div>
 		</div>
 	</div>
@@ -330,7 +338,35 @@ require('footer.php');
 	}
 </style>
 
+<script type="text/html" id="appendTemplate">
+	<div class="container" id="inputContainer">
+		<h2>Enter Address Details</h2><br>
+		<div class="bor8 m-b-20 how-pos4-parent">
+			<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30 addr" onblur="validateA();" type="text" class="ipnutID" id="address" name="address" placeholder="Street Address" required>
+		</div>
+
+		<div class="bor8 m-b-20 how-pos4-parent">
+			<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" onblur="validateC();" type="text" class="ipnutID" id="city" name="city" placeholder="City" required>
+		</div>
+
+		<div class="bor8 m-b-20 how-pos4-parent">
+			<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" onblur="validateS();" type="text" class="ipnutID" id="state" name="state" placeholder="State" required>
+		</div>
+
+		<div class="bor8 m-b-20 how-pos4-parent">
+			<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" onblur="validateP();" type="text" class="ipnutID" id="pincode" name="pincode" placeholder="Zipcode" required>
+		</div>
+		<span class="msg" style="display:none"> </span>
+	</div>
+</script>
+
 <script>
+	function setValue(){
+		var template = $('#appendTemplate').html();
+		var remove = $('#addressCard').remove();
+		$('.appendMe').append(template);
+	}
+
 	function openTab(evt, tabName) {
 		var i, x, tablinks;
 		x = document.getElementsByClassName("checkout");

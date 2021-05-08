@@ -317,13 +317,16 @@ function user_reg(){
     var password=jQuery("#password").val();
 
     if(name==""){
-        alert("Enter Name Please");
+        jQuery('.msg').html('Please Enter Username');
     }else if(email==""){
-        alert("Enter Email Please");
+        jQuery('.msg').html('Enter Email Please');
     }else if(mobile==""){
-        alert("Enter Mobile Number Please");
+        jQuery('.msg').html('Enter Mobile Number Please');
+
     }else if(password==""){
-        alert("Enter Your Password Please");
+        jQuery('.msg').html('Enter New Password');
+    }else if(password.length <= 8){
+        jQuery('.msg').html('Password Must Be At Least 8 Characters Long');
     }else{
         jQuery.ajax({
             url:'reg_submit.php',
@@ -386,7 +389,7 @@ function manageCart(pid,type,is_checkout){
                     alert('Requested Amount Of Items Not Available');
                 }else{
                     if(is_checkout=='yes'){
-                        window.location.href = 'checkout.php';
+                        window.location.href = 'checkout1.php';
                     }
                     
                 }
