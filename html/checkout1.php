@@ -128,7 +128,6 @@ if (isset($_POST['submit'])) {
 		<?php
 		die();
 	} else {
-		// sendInvoice($con, $user_id);
 	?>
 		<script>
 			window.location.href = 'thank_you.php';
@@ -195,8 +194,8 @@ if (isset($_POST['submit'])) {
 									<input type="hidden" name="city" id="city" value="<?php echo $row['city'] ?>" />
 									<input type="hidden" name="state" id="state" value="<?php echo $row['state'] ?>" />
 									<input type="hidden" name="pincode" id="pincode" value="<?php echo $row['pin'] ?>" />
-									<input type="button" style="margin-top:15px; cursor:pointer;" value="Select This" class="btn btn-primary">
-									<input type="button" onclick="setValue();" style="margin-top:15px; cursor:pointer;" value="Enter New Address" class="btn btn-primary">
+									<!-- <input type="button" style="margin-top:15px; cursor:pointer;" value="Select This" class="btn btn-primary"> -->
+									<input type="button" onclick="setValue();" style="margin-top:15px; cursor:pointer;" value="Use Another Address" class="btn btn-primary">
 								</div>
 							</div>
 						</div>
