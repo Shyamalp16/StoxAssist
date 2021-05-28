@@ -77,6 +77,14 @@
                     <span>Categories</span></a>
             </li>
 
+
+            <li class=nav-item>
+                <a class=nav-link href=sub_category.php>
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Sub Categories</span></a>
+                </a>
+            </li>
+
       
             <li class=nav-item>
                 <a class=nav-link href=products.php>
@@ -108,37 +116,7 @@
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span>
                 </a>
-            </li>
-
-       
-            
-
-       
-            
-
-            
-            
-
-            
-            
-
-            
-            
-
-            
-            
-
-            
-            
-
-            
-            
-
-            
-            
-            
-            
-            
+            </li> 
             
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id=sidebarToggle></button>

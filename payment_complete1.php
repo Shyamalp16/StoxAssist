@@ -45,7 +45,5 @@ if(isset($_GET['payment_status']) && isset($_GET['payment_id']) && isset($_GET['
 		<script> window.location.href="payment_fail.php"; </script>
 		<?php
 	}
-
-	
 }
 ?>

@@ -109,8 +109,25 @@ if ($current_page == 'thank_you.php') {
 									<?php
 									foreach ($cat_arr as $list) {
 									?>
-										<li><a href="categories.php?id=<?php echo $list['id'] ?>"><?php echo $list['categories'] ?></a></li>
-									<?php }
+										<li>
+											<a href="categories.php?id=<?php echo $list['id'] ?>"><?php echo $list['categories'] ?></a>
+											<?php
+												$cat_id = $list['id'];
+												$sub_cat_res = mysqli_query($con, "select * from sub_category where status=1 and category_id='$cat_id'");
+												if(mysqli_num_rows($sub_cat_res) > 0){
+											?>
+											<ul class="sub-menu">
+												<?php
+													while($sub_cat_rows= mysqli_fetch_assoc($sub_cat_res)){
+														?>
+														<li> <a href="categories.php?id=<?php echo $list['id'] ?>&sub=<?php echo $sub_cat_rows['id'] ?>"> <?php echo $sub_cat_rows['sub_category'] ?> </a> </li>		 
+													<?php
+													}
+												?>
+											</ul>
+											<?php } ?>
+										<!-- </li>  -->
+									<?php } 
 									?>
 								</ul>
 							</li>

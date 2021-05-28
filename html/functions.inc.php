@@ -21,7 +21,7 @@ function get_safe_value($con,$str){
     }
 }
 
-function get_product($con,$limit='',$cat_id='',$product_id='',$search=''){
+function get_product($con,$limit='',$cat_id='',$product_id='',$search='',$sub_cat=''){
     $sql="select product.*,categories.categories from product,categories where product.status=1 ";
 
     if($cat_id!=''){
@@ -32,6 +32,10 @@ function get_product($con,$limit='',$cat_id='',$product_id='',$search=''){
         $sql.=" and product.id=$product_id ";
     }
 
+    if($sub_cat!=''){
+      $sql.=" and product.sub_category_id=$sub_cat ";
+  }
+
     if($search!=''){
         $sql.=" and (product.name like '%$search%' or product.description like '%$search%') ";
     }
@@ -41,6 +45,8 @@ function get_product($con,$limit='',$cat_id='',$product_id='',$search=''){
     if($limit!=''){
         $sql.=" product.limit $limit";
     }
+    // echo $sql;
+    // die();
 
     $res = mysqli_query($con,$sql);
     $data=array();

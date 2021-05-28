@@ -91,6 +91,15 @@
                     <span>Categories</span></a>
             </li>
 
+
+            
+            <li class=nav-item>
+                <a class=nav-link href=sub_category.php>
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Sub Categories</span></a>
+                </a>
+            </li>
+
       
             <li class="nav-item active">
                 <a class="nav-link" href="products.php">
@@ -352,7 +361,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Category</th>
+                                            <th>Product</th>
                                             <th>Name</th>
                                             <th>Image</th>
                                             <th>Price</th>

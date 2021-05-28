@@ -3,7 +3,6 @@
 	if(isset($_GET['id'])){
 		$product_id=mysqli_real_escape_string($con,$_GET['id']);
 		$product_id = preg_replace("/[^0-9]/", "", $product_id );
-		echo $product_id;
 		if($product_id>0){
 			$get_product=get_product($con,'','',$product_id);
 		}else{
@@ -20,6 +19,26 @@
 		</script>
 		<?php
 	}
+
+
+	if(isset($_POST['rev'])){
+		$product_id;
+		$user_id = $_SESSION['USER_ID'];
+		$rating = get_safe_value($con,$_POST['rating']);
+		$review = get_safe_value($con,$_POST['review']);
+		$added_on=date("Y-m-d H:i:s");
+		
+
+		mysqli_query($con,"insert into review(product_id,user_id,rating,review,added_on) values('$product_id','$user_id','$rating','$review','$added_on')");
+		?>
+		<script>
+			window.location.href = window.location.href;
+		</script>
+		<?php
+	}
+
+
+	$review_sql = mysqli_query($con, "select users.name,review.id,review.rating,review.review from users,review where review.user_id=users.id and review.product_id='$product_id' order by review.added_on desc");
 	?>
 
 	<!-- breadcrumb -->
@@ -193,9 +212,9 @@
 							<a class="nav-link" data-toggle="tab" href="#information" role="tab">Additional information</a>
 						</li>
 
-						<!-- <li class="nav-item p-b-10">
-							<a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a>
-						</li> -->
+							<li class="nav-item p-b-10">
+								<a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (<?php echo mysqli_num_rows($review_sql) ?>)</a>
+							</li>
 					</ul>
 
 					<!-- Tab panes -->
@@ -265,6 +284,12 @@
 								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
 									<div class="p-b-30 m-lr-15-sm">
 										<!-- Review -->
+										<?php 
+										if(mysqli_num_rows($review_sql)>0){
+											while($review_row=mysqli_fetch_assoc($review_sql)){
+												$rating = $review_row['rating'];
+												$i = 0;
+										?>
 										<div class="flex-w flex-t p-b-68">
 											<div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
 												<img src="images/icons/usericon.png" alt="AVATAR">
@@ -273,26 +298,35 @@
 											<div class="size-207">
 												<div class="flex-w flex-sb-m p-b-17">
 													<span class="mtext-107 cl2 p-r-20">
-														Shyamal Patel
+														<?php echo $review_row['name']; ?>
 													</span>
 
 													<span class="fs-18 cl11">
+													<?php while($i<$rating){ ?>
 														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star"></i>
-														<i class="zmdi zmdi-star-half"></i>
+														<?php $i++ ?>
+													<?php } ?>
 													</span>
 												</div>
 
 												<p class="stext-102 cl6">
-													Nice Product
+												<?php echo $review_row['review']; ?>
 												</p>
 											</div>
 										</div>
+										<?php
+										} }else{
+											echo "No Previous Reviews, Enter One";
+											echo "<br>";
+											echo "<br>";
+										}
+										?>
 										
 										<!-- Add review -->
-										<form class="w-full">
+										<?php 
+											if(isset($_SESSION['USER_LOGIN'])){
+										?>
+										<form method="post" class="w-full">
 											<h5 class="mtext-108 cl2 p-b-7">
 												Add a review
 											</h5>
@@ -322,7 +356,7 @@
 													<textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review"></textarea>
 												</div>
 
-												<div class="col-sm-6 p-b-5">
+												<!-- <div class="col-sm-6 p-b-5">
 													<label class="stext-102 cl3" for="name">Name</label>
 													<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name" type="text" name="name">
 												</div>
@@ -330,13 +364,18 @@
 												<div class="col-sm-6 p-b-5">
 													<label class="stext-102 cl3" for="email">Email</label>
 													<input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email" type="text" name="email">
-												</div>
+												</div> -->
 											</div>
-
-											<button class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
+											<span class="d-block text-center my-4 text-muted msg">  </span>
+											<button name="rev" class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
 												Submit
 											</button>
 										</form>
+										<?php
+											}else{
+												echo "Please Login To Insert Your Review";
+											}
+										?>
 									</div>
 								</div>
 							</div>
@@ -411,3 +450,13 @@
 <?php
 require('footer.php');
 ?>
+
+<style>
+	.msg {
+		font-weight: 900;
+	}
+</style>
+
+<script>
+
+</script>

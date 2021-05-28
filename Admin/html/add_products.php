@@ -3,6 +3,7 @@
     require('connection.inc.php');
 
     $categories_id='';
+    $sub_category_id='';
     $name='';
     $mrp='';
     $price='';
@@ -24,6 +25,7 @@
         if($check > 0 ){
             $row = mysqli_fetch_assoc($res);
             $categories_id=$row['categories_id'];
+            $sub_category_id=$row['sub_category_id'];
             $name = $row['name'];
             $mrp = $row['mrp'];
             $price = $row['price'];
@@ -41,6 +43,7 @@
 
     if(isset($_POST['submit'])){
         $categories_id = get_safe_value($con,$_POST['categories_id']);
+        $sub_category_id = get_safe_value($con,$_POST['sub_category_id']);
         $name = get_safe_value($con,$_POST['name']);
         $mrp = get_safe_value($con,$_POST['mrp']);
         $price = get_safe_value($con,$_POST['price']);
@@ -75,15 +78,15 @@
                 if($_FILES['image']['name']!=''){
                     $image=rand(11111111,9999999).'_'.$_FILES['image']['name'];
                     move_uploaded_file($_FILES['image']['tmp_name'],PRODUCT_IMAGE_SERVER_PATH.$image);
-                    $updated="update product set categories_id='$categories_id',name='$name',mrp='$mrp',price='$price',qty='$qty',short_desc='$short_desc',description='$description',meta_title='$meta_title',meta_desc='$meta_desc',meta_keyword='$meta_keyword',image='$image' where id='$id'";
+                    $updated="update product set categories_id='$categories_id',sub_category_id='$sub_category_id',name='$name',mrp='$mrp',price='$price',qty='$qty',short_desc='$short_desc',description='$description',meta_title='$meta_title',meta_desc='$meta_desc',meta_keyword='$meta_keyword',image='$image' where id='$id'";
                 }else{
-                    $updated="update product set categories_id='$categories_id',name='$name',mrp='$mrp',price='$price',qty='$qty',short_desc='$short_desc',description='$description',meta_title='$meta_title',meta_desc='$meta_desc',meta_keyword='$meta_keyword' where id='$id'";
+                    $updated="update product set categories_id='$categories_id',sub_category_id='$sub_category_id',name='$name',mrp='$mrp',price='$price',qty='$qty',short_desc='$short_desc',description='$description',meta_title='$meta_title',meta_desc='$meta_desc',meta_keyword='$meta_keyword' where id='$id'";
                 }
                 mysqli_query($con,$updated);
                }else{
                 $image=rand(11111111,9999999).'_'.$_FILES['image']['name'];
                 move_uploaded_file($_FILES['image']['tmp_name'],PRODUCT_IMAGE_SERVER_PATH.$image);
-                mysqli_query($con,"insert into product(categories_id,name,mrp,price,qty,short_desc,description,meta_title,meta_desc,meta_keyword,status,image) values('$categories_id','$name','$mrp','$price','$qty','$short_desc','$description','$meta_title','$meta_desc','$meta_keyword',1,'$image')");   
+                mysqli_query($con,"insert into product(categories_id,sub_category_id,name,mrp,price,qty,short_desc,description,meta_title,meta_desc,meta_keyword,status,image) values('$categories_id','$sub_category_id','$name','$mrp','$price','$qty','$short_desc','$description','$meta_title','$meta_desc','$meta_keyword',1,'$image')");   
                }
             header('location:products.php');
             die();
@@ -147,7 +150,15 @@
                     <span>Categories</span></a>
             </li>
 
-      
+
+            <li class=nav-item>
+                <a class=nav-link href=sub_category.php>
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Sub Categories</span></a>
+                </a>
+            </li>
+
+
             <li class="nav-item active">
                 <a class="nav-link" href="products.php">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -410,7 +421,7 @@
                                                 <div class="form-group">
                                                     <div class="col-lg-10 d-none d-lg-block">    
                                                         <label for="categories" class="form-control-label">New Category</label>
-                                                        <select class="form-control" name="categories_id" autofocus>
+                                                        <select class="form-control" name="categories_id" id="categories_id" onchange="get_cat()" autofocus required>
                                                             <option>Select New Category</option>
                                                             <?php
                                                             $res = mysqli_query($con, "select id,categories from categories order by categories asc");
@@ -418,6 +429,17 @@
                                                                 echo "<option value=".$row['id'].">".$row['categories']."</option>";
                                                             }
                                                             ?>
+                                                        </select>
+                                                    </div>
+                                                    <br>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-lg-10 d-none d-lg-block">    
+                                                        <label for="categories" class="form-control-label">New Sub Category</label>
+                                                        <select class="form-control" name="sub_category_id" id="sub_category_id" autofocus>
+                                                            <option>Select New Sub Category</option>
+                                                            
                                                         </select>
                                                     </div>
                                                     <br>
@@ -576,6 +598,9 @@
         </div>
     </div>
 
+
+
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -586,6 +611,24 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
+
+
+
 </body>
 
+<script> 
+    function get_cat(){
+        var categories = jQuery('#categories_id').val();
+        jQuery.ajax({
+            url:'get_cat.php',
+            type:'post',
+            data:'categories_id='+categories,
+            success: function(result){
+                jQuery('#sub_category_id').html(result);
+            }
+        })
+    }
+
+</script>
+ 
 </html>

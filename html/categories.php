@@ -3,9 +3,14 @@
 	if(isset($_GET['id'])){
 		$cat_id=mysqli_real_escape_string($con,$_GET['id']);
 		$cat_id = preg_replace("/[^0-9]/", "", $cat_id );
-		echo $cat_id;
+		$sub_cat='';
+		if(isset($_GET['sub'])){
+			$sub_cat = mysqli_real_escape_string($con,$_GET['sub']);
+			$sub_cat = preg_replace("/[^0-9]/", "", $sub_cat );
+			echo $sub_cat;
+		}
 		if($cat_id>0){
-			$get_product=get_product($con,'',$cat_id,'');
+			$get_product=get_product($con,'',$cat_id,'','',$sub_cat);
 		}else{
 			?>
 			<script>
