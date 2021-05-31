@@ -17,9 +17,9 @@
         $mail->Port=465;
         $mail->SMTPSecure="tls";
         $mail->SMTPAuth=true;
-        $mail->Username="patelshyamal016@gmail.com";
-        $mail->Password="HtmlcsgoD";
-        $mail->SetFrom("patelshyamal016@gmail.com");
+        $mail->Username="@gmail.com";
+        $mail->Password="";
+        $mail->SetFrom("@gmail.com");
         $mail->addAddress("$email");
         $mail->IsHTML(true);
         $mail->Subject="Your StoxAssist OTP";
@@ -47,9 +47,9 @@
         $mail->Port=465;
         $mail->SMTPSecure="tls";
         $mail->SMTPAuth=true;
-        $mail->Username="patelshyamal016@gmail.com";
-        $mail->Password="HtmlcsgoD";
-        $mail->SetFrom("patelshyamal016@gmail.com");
+        $mail->Username="@gmail.com";
+        $mail->Password="";
+        $mail->SetFrom("@gmail.com");
         $mail->addAddress("$email");
         $mail->IsHTML(true);
         $mail->Subject="Your StoxAssist OTP";
@@ -82,9 +82,9 @@
         $mail->Port=465;
         $mail->SMTPSecure="tls";
         $mail->SMTPAuth=true;
-        $mail->Username="patelshyamal016@gmail.com";
-        $mail->Password="HtmlcsgoD";
-        $mail->SetFrom("patelshyamal016@gmail.com");
+        $mail->Username="@gmail.com";
+        $mail->Password="";
+        $mail->SetFrom("@gmail.com");
         $mail->addAddress("$email");
         $mail->IsHTML(true);
         $mail->Subject="Your StoxAssist Password";
